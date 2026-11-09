@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Client Portal — Cardinal Insurance Group</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="assets/img/logo-alt.png">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site.css">
+<link rel="stylesheet" href="assets/css/portal.css">
+</head>
+<body class="portal">
+
+<!-- LOGIN -->
+<section class="login" id="loginView">
+  <div class="login__card">
+    <img class="login__logo" src="assets/img/logo-alt.png" alt="Cardinal Insurance Group">
+    <h1>Client Portal</h1>
+    <p>Sign in to view policies, cards and messages.</p>
+    <form id="loginForm">
+      <div class="fld"><label for="pEmail">Email address</label><input id="pEmail" type="email" placeholder="you@email.com" autocomplete="username" required></div>
+      <div class="fld"><label for="pPin">Last 4 of policy number</label><input id="pPin" inputmode="numeric" maxlength="4" placeholder="1001" autocomplete="current-password" required></div>
+      <button class="btn btn--blue btn--block" type="submit">Sign in</button>
+      <div class="err" id="loginErr">That email and policy number don’t match. Try the demo login below.</div>
+    </form>
+    <div class="demo"><b>Demo access</b><br>Email: jill.n@example.com<br>Last 4 of policy: 4120<br><span style="opacity:.75">Or tb@example.com · 2335</span></div>
+    <p style="margin:16px 0 0;font-size:12.5px"><a href="index.html" style="color:#046DCD;font-weight:700">← Back to cardinalinsurancegrp.com</a></p>
+  </div>
+</section>
+
+<!-- PORTAL -->
+<div id="portalView" class="hide">
+  <div class="pnav"><div class="pwrap pnav__in">
+    <img src="assets/img/logo-alt.png" alt="Cardinal Insurance Group">
+    <div class="pnav__sp">
+      <div><div class="pnav__u" id="whoName">—</div><div class="pnav__o" id="whoSince">—</div></div>
+      <button class="linkbtn" id="signOut">Sign out</button>
+    </div>
+  </div></div>
+
+  <div class="pwrap">
+    <div class="phead">
+      <h1>Your policies</h1>
+      <p id="greeting">—</p>
+    </div>
+
+    <div class="pgrid">
+      <div>
+        <div class="panel">
+          <div class="panel__h"><h2>Active coverage</h2><span class="tag" id="polCount">—</span></div>
+          <div class="panel__b" id="polList"></div>
+        </div>
+
+        <div class="panel" style="margin-top:18px">
+          <div class="panel__h"><h2>Message your agent</h2><span style="margin-left:auto;font-size:12px;color:#5B6B84">Usually replies same day</span></div>
+          <div class="panel__b">
+            <div class="msgbox" id="msgBox"></div>
+            <form class="mform" id="msgForm">
+              <input id="msgInput" placeholder="Type a message to John…" autocomplete="off">
+              <button class="btn btn--blue btn--sm" type="submit">Send</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="side-card">
+          <h3>Your agent</h3>
+          <div class="agent">
+            <div class="agent__av">JC</div>
+            <div><b>John C.</b><span>Cardinal Insurance Group</span></div>
+          </div>
+          <div style="margin-top:12px;font-size:13px;color:#5B6B84;line-height:1.7">
+            (480) 813-2233<br>Mon–Fri 9am–5pm<br>2730 S Val Vista Dr, Gilbert AZ
+          </div>
+          <button class="btn btn--line btn--block btn--sm" style="margin-top:12px" id="reqReview">Request coverage review</button>
+        </div>
+
+        <div class="side-card">
+          <h3>Documents</h3>
+          <div class="doc"><span>Insurance card(s)</span><a id="dlCards">Download</a></div>
+          <div class="doc"><span>Declarations page</span><a class="docStub">PDF</a></div>
+          <div class="doc"><span>Billing statement</span><a class="docStub">PDF</a></div>
+          <div class="doc"><span>Policy jacket</span><a class="docStub">PDF</a></div>
+        </div>
+
+        <div class="side-card">
+          <h3>Quick actions</h3>
+          <div class="doc"><span>Report a claim</span><a href="tel:+14808132233">Call</a></div>
+          <div class="doc"><span>Make a payment</span><a class="docStub">Open</a></div>
+          <div class="doc"><span>Update contact info</span><a class="docStub">Edit</a></div>
+          <div class="doc"><span>Request a policy change</span><a class="docStub">Start</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<script src="assets/js/app.js"></script>
+<script src="assets/js/portal.js"></script>
+</body>
+</html>

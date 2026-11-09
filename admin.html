@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Admin — Cardinal Insurance Group | LNL Solutions</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="assets/img/logo-alt.png">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/admin.css">
+</head>
+<body class="admin">
+
+<div class="gate" id="gate">
+  <form class="gate__c" id="gateForm">
+    <img src="assets/img/logo-alt.png" alt="" style="height:44px;width:auto;margin:0 auto 16px">
+    <h2>Admin access</h2>
+    <p>Enter the agency code to open the dashboard.</p>
+    <input id="gateCode" placeholder="••••••••" autocomplete="off" aria-label="Access code">
+    <button class="btn btn--blue" type="submit" style="width:100%;margin-top:12px">Unlock dashboard</button>
+    <div class="gate__err" id="gateErr">Incorrect code.</div>
+    <div class="gate__k">Demo code <b>cardinal2026</b></div>
+  </form>
+</div>
+
+<div class="atop"><div class="awrap atop__in">
+  <img src="assets/img/logo-alt.png" alt="">
+  <span class="atop__t">Cardinal Insurance Group</span>
+  <span class="atop__b">Admin</span>
+  <div class="atop__sp">
+    <span>Signed in as John C.</span>
+    <a href="index.html" style="color:#046DCD;font-weight:700">View site ↗</a>
+  </div>
+</div></div>
+
+<div class="awrap">
+  <div class="ahead">
+    <div>
+      <h1>Today at a glance</h1>
+      <p id="asOf">—</p>
+    </div>
+    <div class="ahead__sp">
+      <button class="btn btn--line btn--sm" id="refresh">Refresh</button>
+      <button class="btn btn--blue btn--sm" id="addLead">Add lead</button>
+    </div>
+  </div>
+
+  <div class="kpis" id="kpis"></div>
+
+  <div class="grid2">
+    <div>
+      <div class="panel">
+        <div class="panel__h"><h2>New leads</h2><span class="n" id="leadCount">—</span></div>
+        <div class="panel__b">
+          <table>
+            <thead><tr><th>Name</th><th>Coverage</th><th>ZIP</th><th>Source</th><th>Status</th><th>Added</th></tr></thead>
+            <tbody id="leadRows"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel__h"><h2>Clients</h2><span class="n" id="clientCount">—</span></div>
+        <div class="panel__b">
+          <table>
+            <thead><tr><th>Client</th><th>Policies</th><th>Monthly</th><th>Carrier</th><th>Client since</th></tr></thead>
+            <tbody id="clientRows"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="panel">
+        <div class="panel__h"><h2>Follow-ups needed</h2><span class="n" id="fuCount">—</span></div>
+        <div class="panel__b" id="fuList"></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel__h"><h2>Campaign performance</h2><span class="n">30 days</span></div>
+        <div class="panel__b">
+          <table>
+            <thead><tr><th>Channel</th><th>Spend</th><th>Leads</th><th>CPL</th><th>Bound</th></tr></thead>
+            <tbody id="chanRows"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<div class="drawer" id="drawer"></div>
+
+<script src="assets/js/app.js"></script>
+<script src="assets/js/admin.js"></script>
+</body>
+</html>
