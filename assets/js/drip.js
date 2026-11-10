@@ -118,12 +118,12 @@
       const [leadId, cid, step] = b.dataset.done.split(':');
       S.logTouch({ leadId, campaign: cid, step: +step, channel: 'manual' });
       S.updateLead(leadId, { lastTouch: new Date().toISOString() });
-      renderAll();
+      refresh();
     }));
     el.querySelectorAll('[data-snooze]').forEach(b => b.addEventListener('click', e => {
       e.stopPropagation();
       S.snooze(b.dataset.snooze);
-      renderAll();
+      refresh();
     }));
     el.querySelectorAll('.qrow').forEach(r => r.addEventListener('click', () => {
       const id = r.dataset.lead;
@@ -152,7 +152,7 @@
     el.querySelectorAll('[data-camp]').forEach(b => b.addEventListener('click', () => {
       const id = b.dataset.camp;
       S.setPaused(id, !S.paused()[id]);
-      renderAll();
+      refresh();
     }));
   }
 
@@ -202,14 +202,19 @@
       '<div class="rt__h" style="margin-top:14px">Coverage gaps</div>' + xsell;
   }
 
-  function renderAll() {
+  function renderOwn() { renderQueue(); renderCampaigns(); renderPipeline(); renderRetention(); }
+  window.CG.renderDrip = renderOwn;
+
+  /* one entry point for every button in the dashboard */
+  window.CG.renderAll = function () {
     if (window.CG.renderAdmin) window.CG.renderAdmin();
-    renderQueue(); renderCampaigns(); renderPipeline(); renderRetention();
-  }
-  window.CG.renderDrip = renderAll;
+    if (window.CG.renderAms) window.CG.renderAms();
+    renderOwn();
+  };
+  const refresh = () => (window.CG.renderAll || renderOwn)();
 
-  if (document.readyState !== 'loading') renderAll();
-  else document.addEventListener('DOMContentLoaded', renderAll);
+  if (document.readyState !== 'loading') refresh();
+  else document.addEventListener('DOMContentLoaded', refresh);
 
-  setInterval(renderAll, 15000);
+  setInterval(refresh, 20000);
 })();

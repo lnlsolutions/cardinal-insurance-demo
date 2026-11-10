@@ -33,10 +33,20 @@
   </div>
 </div></div>
 
+<div class="anav"><div class="awrap anav__in">
+  <button class="ntab ntab--on" data-tab="today">Today</button>
+  <button class="ntab" data-tab="leads">Leads</button>
+  <button class="ntab" data-tab="clients">Clients</button>
+  <button class="ntab" data-tab="policies">Policies</button>
+  <button class="ntab" data-tab="claims">Claims</button>
+  <button class="ntab" data-tab="money">Money</button>
+  <button class="ntab" data-tab="automations">Automations</button>
+</div></div>
+
 <div class="awrap">
   <div class="ahead">
     <div>
-      <h1>Today at a glance</h1>
+      <h1 id="pageTitle">Today at a glance</h1>
       <p id="asOf">—</p>
     </div>
     <div class="ahead__sp">
@@ -47,55 +57,106 @@
 
   <div class="kpis" id="kpis"></div>
 
-  <div class="panel">
-    <div class="panel__h"><h2>Today's queue</h2><span class="n" id="qCount">—</span></div>
-    <div class="panel__b" id="queue"></div>
-  </div>
-
-  <div class="panel">
-    <div class="panel__h"><h2>Drip campaigns</h2><span class="n">automated follow-up</span></div>
-    <div class="panel__b" id="campaigns"></div>
-  </div>
-
-  <div class="grid2">
-    <div>
-      <div class="panel">
-        <div class="panel__h"><h2>New leads</h2><span class="n" id="leadCount">—</span></div>
-        <div class="panel__b">
-          <table>
-            <thead><tr><th>Name</th><th>Coverage</th><th>ZIP</th><th>Source</th><th>Status</th><th>Added</th></tr></thead>
-            <tbody id="leadRows"></tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="panel">
-        <div class="panel__h"><h2>Clients</h2><span class="n" id="clientCount">—</span></div>
-        <div class="panel__b">
-          <table>
-            <thead><tr><th>Client</th><th>Policies</th><th>Monthly</th><th>Carrier</th><th>Client since</th></tr></thead>
-            <tbody id="clientRows"></tbody>
-          </table>
-        </div>
-      </div>
+  <!-- TODAY -->
+  <section class="tabpane tabpane--on" data-pane="today">
+    <div class="panel">
+      <div class="panel__h"><h2>Today's queue</h2><span class="n" id="qCount">—</span></div>
+      <div class="panel__b" id="queue"></div>
     </div>
-
-    <div>
+    <div class="grid2">
       <div class="panel">
-        <div class="panel__h"><h2>Follow-ups needed</h2><span class="n" id="fuCount">—</span></div>
-        <div class="panel__b" id="fuList"></div>
+        <div class="panel__h"><h2>Retention &amp; cross-sell</h2><span class="n">next 90 days</span></div>
+        <div class="panel__b" id="retention"></div>
       </div>
-
       <div class="panel">
         <div class="panel__h"><h2>Pipeline</h2><span class="n">leads by stage</span></div>
         <div class="panel__b" id="pipeline"></div>
       </div>
+    </div>
+  </section>
 
-      <div class="panel">
-        <div class="panel__h"><h2>Retention & cross-sell</h2><span class="n">next 90 days</span></div>
-        <div class="panel__b" id="retention"></div>
+  <!-- LEADS -->
+  <section class="tabpane" data-pane="leads">
+    <div class="panel">
+      <div class="panel__h"><h2>New leads</h2><span class="n" id="leadCount">—</span></div>
+      <div class="panel__b">
+        <table>
+          <thead><tr><th>Name</th><th>Coverage</th><th>ZIP</th><th>Source</th><th>Status</th><th>Added</th></tr></thead>
+          <tbody id="leadRows"></tbody>
+        </table>
       </div>
+    </div>
+    <div class="panel">
+      <div class="panel__h"><h2>Follow-up required</h2><span class="n" id="fuCount">—</span></div>
+      <div class="panel__b" id="fuList"></div>
+    </div>
+  </section>
 
+  <!-- CLIENTS -->
+  <section class="tabpane" data-pane="clients">
+    <div class="panel">
+      <div class="panel__h"><h2>Clients</h2><span class="n" id="clientCount">—</span></div>
+      <div class="panel__b">
+        <table>
+          <thead><tr><th>Client</th><th>Policies</th><th>Monthly</th><th>Carrier</th><th>Client since</th></tr></thead>
+          <tbody id="clientRows"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- POLICIES -->
+  <section class="tabpane" data-pane="policies">
+    <div class="panel">
+      <div class="panel__h"><h2>Book of business</h2><span class="n" id="polCount">—</span></div>
+      <div class="panel__b">
+        <table>
+          <thead><tr><th>Policy</th><th>Client</th><th>Line</th><th>Carrier</th><th>Term</th><th>Renews</th><th>Monthly</th><th>Status</th></tr></thead>
+          <tbody id="polRows"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="grid2">
+      <div class="panel">
+        <div class="panel__h"><h2>Documents</h2><span class="n">declarations &amp; cards</span></div>
+        <div class="panel__b" id="docList"></div>
+      </div>
+      <div class="panel">
+        <div class="panel__h"><h2>By line</h2><span class="n">monthly premium</span></div>
+        <div class="panel__b" id="lineMix"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLAIMS -->
+  <section class="tabpane" data-pane="claims">
+    <div class="panel">
+      <div class="panel__h"><h2>Claims</h2><span class="n" id="claimCount">—</span></div>
+      <div class="panel__b">
+        <table>
+          <thead><tr><th>Claim</th><th>Client</th><th>Type</th><th>Policy</th><th>Opened</th><th>Stage</th><th>Reserve</th><th>Paid</th></tr></thead>
+          <tbody id="claimRows"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel__h"><h2>Claim activity</h2><span class="n">latest</span></div>
+      <div class="panel__b" id="claimFeed"></div>
+    </div>
+  </section>
+
+  <!-- MONEY -->
+  <section class="tabpane" data-pane="money">
+    <div class="grid2">
+      <div class="panel">
+        <div class="panel__h"><h2>Commission by carrier</h2><span class="n">this month</span></div>
+        <div class="panel__b">
+          <table>
+            <thead><tr><th>Carrier</th><th>Policies</th><th>Premium</th><th>Commission</th><th>Status</th></tr></thead>
+            <tbody id="commRows"></tbody>
+          </table>
+        </div>
+      </div>
       <div class="panel">
         <div class="panel__h"><h2>Campaign performance</h2><span class="n">30 days</span></div>
         <div class="panel__b">
@@ -106,7 +167,19 @@
         </div>
       </div>
     </div>
-  </div>
+    <div class="panel">
+      <div class="panel__h"><h2>Acquisition efficiency</h2><span class="n">what the spend returns</span></div>
+      <div class="panel__b" id="moneyExtra"></div>
+    </div>
+  </section>
+
+  <!-- AUTOMATIONS -->
+  <section class="tabpane" data-pane="automations">
+    <div class="panel">
+      <div class="panel__h"><h2>Drip campaigns</h2><span class="n">automated follow-up</span></div>
+      <div class="panel__b" id="campaigns"></div>
+    </div>
+  </section>
 </div>
 
 <div class="scrim" id="scrim"></div>
@@ -114,6 +187,7 @@
 
 <script src="assets/js/app.js"></script>
 <script src="assets/js/admin.js"></script>
+<script src="assets/js/ams.js"></script>
 <script src="assets/js/drip.js"></script>
 </body>
 </html>

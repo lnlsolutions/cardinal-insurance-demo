@@ -9,7 +9,9 @@
     seeded: NS + '_seeded_v1',
     touches: NS + '_touches_v1',
     paused: NS + '_paused_v1',
-    snooze: NS + '_snooze_v1'
+    snooze: NS + '_snooze_v1',
+    claims: NS + '_claims_v1',
+    notes: NS + '_notes_v1'
   };
   const read = (k, fb) => { try { const v = JSON.parse(localStorage.getItem(k)); return v === null ? fb : v; } catch (e) { return fb; } };
   const write = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} };
@@ -48,6 +50,23 @@
     setPaused(id, val) { const m = this.paused(); m[id] = !!val; write(K.paused, m); },
     snoozes: () => read(K.snooze, {}),
     snooze(key) { const m = this.snoozes(); m[key] = new Date(Date.now() + 864e5).toISOString(); write(K.snooze, m); },
+    claims: () => read(K.claims, []),
+    addClaim(c) {
+      const all = this.claims();
+      all.unshift(Object.assign({ id: uid('CLM-'), opened: new Date().toISOString() }, c));
+      write(K.claims, all);
+      return all;
+    },
+    updateClaim(id, patch) {
+      write(K.claims, this.claims().map(c => c.id === id ? Object.assign({}, c, patch) : c));
+    },
+    notes: () => read(K.notes, {}),
+    notesFor(id) { return this.notes()[id] || []; },
+    addNote(id, text) {
+      const m = this.notes(); m[id] = m[id] || [];
+      m[id].unshift({ at: new Date().toISOString(), text });
+      write(K.notes, m);
+    },
     addMsg(m) {
       const all = this.msgs();
       all.unshift(Object.assign({ id: uid('M-'), at: new Date().toISOString(), from: 'client' }, m));
@@ -85,6 +104,14 @@
       const add = demoLeads.filter(l => !seen.has(l.name.trim().toLowerCase()));
       write(K.leads, leads.concat(add));
       if (!clients.length) write(K.clients, demoClients);
+      if (!read(K.claims, []).length) write(K.claims, [
+        { id: 'CLM-2401', clientId: 'CL-1001', policy: 'AZ-HO-551903', type: 'Water damage', opened: '2026-08-14',
+          status: 'Open', stage: 'Adjuster assigned', adjuster: 'M. Ruiz', reserve: 8400, paid: 0,
+          note: 'Supply line under kitchen sink. Mitigation done, drywall scheduled.' },
+        { id: 'CLM-2402', clientId: 'CL-1002', policy: 'AZ-AU-772335', type: 'Windshield', opened: '2026-09-02',
+          status: 'Closed', stage: 'Paid', adjuster: '—', reserve: 620, paid: 612,
+          note: 'Safelite replaced at home. Paid in 4 days.' }
+      ]);
       write(K.seeded, true);
     }
   };

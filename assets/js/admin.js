@@ -98,7 +98,7 @@
     $('clientCount').textContent = cs.length + ' active';
     $('clientRows').innerHTML = cs.map(c => {
       const prem = c.policies.reduce((a, p) => a + p.premium, 0);
-      return `<tr>
+      return `<tr data-client="${c.id}">
         <td><div class="who"><span class="av">${initials(c.name)}</span><span>${c.name}</span></div></td>
         <td>${c.policies.map(p => p.line).join(', ')}</td>
         <td style="font-weight:700">${money(prem)}</td>
@@ -106,6 +106,8 @@
         <td style="color:#5B6B84">${new Date(c.since).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}</td>
       </tr>`;
     }).join('') || '<tr><td colspan="5" class="empty">No clients yet.</td></tr>';
+    const rows = $('clientRows').querySelectorAll('tr[data-client]');
+    rows.forEach(r => r.addEventListener('click', () => window.CG.openClient(r.dataset.client)));
   }
 
   function renderChannels() {
@@ -152,7 +154,7 @@
     drawer.classList.add('on'); scrim.classList.add('on');
   }
 
-  function renderAll() { renderKpis(); renderLeads(); renderFollowUps(); renderClients(); renderChannels(); }
+  function renderAll() { renderKpis(); renderLeads(); renderFollowUps(); renderClients(); renderChannels(); if (window.CG.renderAms) window.CG.renderAms(); if (window.CG.renderDrip) window.CG.renderDrip(); }
 
   window.CG.renderAdmin = renderAll;
   window.CG.openLead = openLead;
