@@ -174,3 +174,17 @@ tbody tr:hover{background:#F7FAFE}
 tr[data-client],tr[data-claim]{cursor:pointer}
 tr[data-client]:hover,tr[data-claim]:hover{background:#FAFCFF}
 @media(max-width:700px){.ntab{padding:12px 11px;font-size:12.5px}}
+
+
+/* ── growth tab: zip heat ─────────────────────────────── */
+.zgrid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+@media(max-width:900px){.zgrid{grid-template-columns:repeat(3,1fr)}}
+.zt{border-radius:10px;padding:10px 10px 9px;display:flex;flex-direction:column;gap:1px;
+    border:1px solid rgba(4,109,205,.12);min-height:74px}
+.zt b{font-size:13px;font-weight:800;letter-spacing:.01em}
+.zt span{font-size:10.5px;opacity:.85;text-transform:uppercase;letter-spacing:.06em}
+.zt em{font-style:normal;font-size:12px;font-weight:700;margin-top:auto}
+.zlegend{display:flex;align-items:center;gap:6px;margin-top:12px;font-size:11px;color:#5B6B84}
+.zlegend i{width:22px;height:9px;border-radius:3px;display:inline-block;border:1px solid rgba(4,109,205,.12)}
+.zlegend span:last-child{margin-left:2px}
+.tg--miss{background:#FDECEE;color:#A82029;border:1px solid #F6C9CE}

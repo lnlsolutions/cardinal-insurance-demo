@@ -35,6 +35,7 @@
 
 <div class="anav"><div class="awrap anav__in">
   <button class="ntab ntab--on" data-tab="today">Today</button>
+  <button class="ntab" data-tab="growth">Growth</button>
   <button class="ntab" data-tab="leads">Leads</button>
   <button class="ntab" data-tab="clients">Clients</button>
   <button class="ntab" data-tab="policies">Policies</button>
@@ -76,6 +77,42 @@
   </section>
 
   <!-- LEADS -->
+  <section class="tabpane" data-pane="growth">
+    <div class="kpis" id="gKpis"></div>
+
+    <div class="grid2">
+      <div class="panel">
+        <div class="panel__h"><h2>Campaigns</h2><span class="n">last 30 days</span></div>
+        <div class="panel__b">
+          <table>
+            <thead><tr><th>Channel</th><th>Spend</th><th>Leads</th><th>Cost / lead</th><th>Calls</th><th>Cost / call</th></tr></thead>
+            <tbody id="gChan"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel__h"><h2>Calls</h2><span class="n" id="gCallMeta">—</span></div>
+        <div class="panel__b" id="gCalls"></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel__h"><h2>Where the leads come from</h2><span class="n">Phoenix metro · ZIP heat</span></div>
+      <div class="panel__b" id="gZip"></div>
+    </div>
+
+    <div class="panel">
+      <div class="panel__h"><h2>Search visibility</h2><span class="n">Google · local pack</span></div>
+      <div class="panel__b">
+        <table>
+          <thead><tr><th>Keyword</th><th>Volume / mo</th><th>Rank now</th><th>Change</th><th>Top 3</th></tr></thead>
+          <tbody id="gKw"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
   <section class="tabpane" data-pane="leads">
     <div class="panel">
       <div class="panel__h"><h2>New leads</h2><span class="n" id="leadCount">—</span></div>
@@ -189,5 +226,6 @@
 <script src="assets/js/admin.js"></script>
 <script src="assets/js/ams.js"></script>
 <script src="assets/js/drip.js"></script>
+<script src="assets/js/growth.js"></script>
 </body>
 </html>
