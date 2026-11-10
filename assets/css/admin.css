@@ -188,3 +188,14 @@ tr[data-client]:hover,tr[data-claim]:hover{background:#FAFCFF}
 .zlegend i{width:22px;height:9px;border-radius:3px;display:inline-block;border:1px solid rgba(4,109,205,.12)}
 .zlegend span:last-child{margin-left:2px}
 .tg--miss{background:#FDECEE;color:#A82029;border:1px solid #F6C9CE}
+
+/* integrations */
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:760px){.fgrid{grid-template-columns:1fr}}
+.fld{display:flex;flex-direction:column;gap:4px;font-size:11px;color:#5B6B84;font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+.fld input,.fld select{border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:13px;font-family:inherit;color:#1F2937;background:#fff;font-weight:400;text-transform:none;letter-spacing:0}
+.fld input:focus,.fld select:focus{outline:2px solid rgba(4,109,205,.25);border-color:var(--blue)}
+.mut{color:#5B6B84;font-size:12.5px;line-height:1.5}
+.feed{display:flex;flex-direction:column;gap:2px;padding:9px 0;border-bottom:1px solid #EEF2F8;font-size:12.5px}
+.feed:last-child{border-bottom:0}
+.feed b{font-size:11px;color:#8394AC;font-weight:700;text-transform:uppercase;letter-spacing:.04em}

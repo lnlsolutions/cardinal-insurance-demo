@@ -42,6 +42,7 @@
   <button class="ntab" data-tab="claims">Claims</button>
   <button class="ntab" data-tab="money">Money</button>
   <button class="ntab" data-tab="automations">Automations</button>
+  <button class="ntab" data-tab="integrations">Integrations</button>
 </div></div>
 
 <div class="awrap">
@@ -217,6 +218,52 @@
       <div class="panel__b" id="campaigns"></div>
     </div>
   </section>
+<section class="tabpane" data-pane="integrations">
+  <div class="grid2">
+    <div>
+      <div class="panel">
+        <div class="panel__h"><h2>Applied Epic</h2><span class="n" id="epicState">not connected</span></div>
+        <div class="panel__b">
+          <p class="mut" style="margin:0 0 12px">Pull clients, policies and activities straight out of Epic so this dashboard is never a second place to type. Credentials are issued by the Applied Dev Center: sandbox first, then a production app tied to your enterprise ID and Epic database.</p>
+          <div class="fgrid">
+            <label class="fld"><span>Environment</span>
+              <select id="epicEnv"><option value="sandbox">Sandbox</option><option value="production">Production</option></select>
+            </label>
+            <label class="fld"><span>Enterprise ID</span><input id="epicEnt" placeholder="e.g. 10482"></label>
+            <label class="fld"><span>Epic database name</span><input id="epicDb" placeholder="e.g. CARDINAL"></label>
+            <label class="fld"><span>Client ID</span><input id="epicCid" placeholder="from Dev Center"></label>
+            <label class="fld"><span>Client secret / API key</span><input id="epicSec" type="password" placeholder="stored server side, never on this page"></label>
+            <label class="fld"><span>Base URL</span><input id="epicUrl" value="https://api.myappliedproducts.com"></label>
+          </div>
+          <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+            <button class="btn btn--blue btn--sm" id="epicSave">Save connection</button>
+            <button class="btn btn--line btn--sm" id="epicTest">Test connection</button>
+            <button class="btn btn--line btn--sm" id="epicPull">Pull book</button>
+          </div>
+          <p class="mut" id="epicMsg" style="margin:12px 0 0">No credentials saved yet.</p>
+          <div class="warn" style="margin-top:12px">Credentials go in the encrypted server vault and are used by a backend function. They are never written into this page, because this site is public.</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="panel">
+        <div class="panel__h"><h2>Or import the book today</h2><span class="n">CSV</span></div>
+        <div class="panel__b">
+          <p class="mut" style="margin:0 0 10px">No waiting on approvals. Export your book from Epic, drop the file here, and clients and policies load into the dashboard immediately.</p>
+          <input type="file" id="bookFile" accept=".csv,text/csv" style="font-size:12px;margin-bottom:10px">
+          <p class="mut" style="margin:0 0 6px"><b>Columns:</b> Client, Policy, Line, Carrier, Premium, Renewal, Email, Phone</p>
+          <p class="mut" style="margin:0">A sample file is linked below so the export matches first time.</p>
+          <a class="doc" id="sampleCsv" download="epic-book-template.csv" href="#">Download CSV template</a>
+          <p id="importMsg" class="mut" style="margin:10px 0 0"></p>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel__h"><h2>Sync log</h2><span class="n">this browser</span></div>
+        <div class="panel__b" id="syncLog"></div>
+      </div>
+    </div>
+  </div>
+</section>
 </div>
 
 <div class="scrim" id="scrim"></div>
@@ -226,6 +273,7 @@
 <script src="assets/js/admin.js"></script>
 <script src="assets/js/ams.js"></script>
 <script src="assets/js/drip.js"></script>
+<script src="assets/js/integrations.js"></script>
 <script src="assets/js/growth.js"></script>
 </body>
 </html>

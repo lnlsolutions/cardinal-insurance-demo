@@ -50,6 +50,25 @@
     setPaused(id, val) { const m = this.paused(); m[id] = !!val; write(K.paused, m); },
     snoozes: () => read(K.snooze, {}),
     snooze(key) { const m = this.snoozes(); m[key] = new Date(Date.now() + 864e5).toISOString(); write(K.snooze, m); },
+    importBook(rows) {
+      const cs = this.clients();
+      let added = 0;
+      rows.forEach(r => {
+        if (!r || !r.name) return;
+        let c = cs.find(x => (x.name || '').toLowerCase() === r.name.toLowerCase());
+        if (!c) {
+          c = { id: uid('CL-'), name: r.name, email: r.email || '', phone: r.phone || '',
+                address: r.address || '', since: new Date().toISOString().slice(0, 10),
+                agent: r.agent || 'John C.', policies: [] };
+          cs.push(c); added++;
+        }
+        c.policies.push({ no: r.no || uid('POL-'), line: r.line || 'Auto', carrier: r.carrier || '',
+          term: r.term || '12 months', renews: r.renews || '', premium: Number(r.premium) || 0,
+          due: r.due || '1st', status: r.status || 'Active' });
+      });
+      write(K.clients, cs);
+      return { added, policies: rows.length };
+    },
     claims: () => read(K.claims, []),
     addClaim(c) {
       const all = this.claims();
