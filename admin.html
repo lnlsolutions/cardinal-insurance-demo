@@ -217,6 +217,35 @@
       <div class="panel__h"><h2>Drip campaigns</h2><span class="n">automated follow-up</span></div>
       <div class="panel__b" id="campaigns"></div>
     </div>
+
+    <div class="panel">
+      <div class="panel__h"><h2>Quote assistant popup</h2><span class="n" id="popState">—</span></div>
+      <div class="panel__b">
+        <p class="mut" style="margin:0 0 12px">Control exactly when the quote assistant opens on its own. Leave the dates empty to run it every day, or set a window for a campaign, an open enrollment push or a slow week you want to fill. The button stays available to visitors either way.</p>
+        <div class="fgrid">
+          <label class="fld"><span>Start date</span><input type="date" id="popStart"></label>
+          <label class="fld"><span>End date</span><input type="date" id="popEnd"></label>
+          <label class="fld"><span>Opens after (seconds)</span><input type="number" id="popDelay" min="0" max="120" value="3"></label>
+          <label class="fld"><span>Only between</span>
+            <div style="display:flex;gap:8px;align-items:center">
+              <input type="time" id="popFrom" style="flex:1"><span style="font-size:12px;color:#8394AC">and</span><input type="time" id="popTo" style="flex:1">
+            </div>
+          </label>
+        </div>
+        <div style="margin-top:12px">
+          <span style="font-size:11px;font-weight:600;color:#5B6B84;text-transform:uppercase;letter-spacing:.05em">Days</span>
+          <div id="popDays" style="display:flex;gap:6px;margin-top:6px;flex-wrap:wrap"></div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:14px;align-items:center;flex-wrap:wrap">
+          <button class="btn btn--blue btn--sm" id="popSave">Save schedule</button>
+          <button class="btn btn--line btn--sm" id="popClear">Clear dates</button>
+          <label style="font-size:12.5px;color:#33415C;display:flex;align-items:center;gap:6px">
+            <input type="checkbox" id="popOn" checked> Auto-open enabled
+          </label>
+        </div>
+        <p class="mut" id="popMsg" style="margin:12px 0 0"></p>
+      </div>
+    </div>
   </section>
 <section class="tabpane" data-pane="integrations">
   <div class="grid2">
@@ -293,6 +322,7 @@
 <script src="assets/js/ams.js"></script>
 <script src="assets/js/drip.js"></script>
 <script src="assets/js/integrations.js"></script>
+<script src="assets/js/popup-admin.js"></script>
 <script src="assets/js/growth.js"></script>
 </body>
 </html>

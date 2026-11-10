@@ -325,7 +325,36 @@
     });
 
     // pop on every page after 3s
-    setTimeout(() => { if (!opened && !chat.classList.contains('open')) open(); }, 3000);
+    const cfg = S.popupConfig();
+    if (S.popupActive(cfg)) {
+      setTimeout(() => { if (!opened && !chat.classList.contains('open')) open(); }, (cfg.delay || 3) * 1000);
+    }
+  };
+
+  /* ── popup scheduling ─────────────────────────────────────── */
+  S.popupConfig = function () {
+    let c = null;
+    try { c = JSON.parse(localStorage.getItem('cardinal_popup_v1')); } catch (e) {}
+    if (!c && window.CG_POPUP) c = window.CG_POPUP;
+    if (!c) c = {};
+    return Object.assign({ enabled: true, delay: 3, start: '', end: '', days: [0, 1, 2, 3, 4, 5, 6], from: '', to: '' }, c);
+  };
+
+  S.popupActive = function (cfg) {
+    cfg = cfg || S.popupConfig();
+    if (!cfg.enabled) return false;
+    const now = new Date();
+    const pad = n => String(n).padStart(2, '0');
+    const today = now.getFullYear() + '-' + pad(now.getMonth() + 1) + '-' + pad(now.getDate());
+    if (cfg.start && today < cfg.start) return false;
+    if (cfg.end && today > cfg.end) return false;
+    if (Array.isArray(cfg.days) && cfg.days.length && cfg.days.indexOf(now.getDay()) === -1) return false;
+    const mins = now.getHours() * 60 + now.getMinutes();
+    const parse = t => { if (!t) return null; const [h, m] = String(t).split(':').map(Number); return h * 60 + (m || 0); };
+    const a = parse(cfg.from), b = parse(cfg.to);
+    if (a !== null && mins < a) return false;
+    if (b !== null && mins > b) return false;
+    return true;
   };
 
   /* ── page behaviours ─────────────────────────────────────── */
