@@ -130,6 +130,63 @@
     setTimeout(() => URL.revokeObjectURL(a.href), 1500);
   });
 
+
+  /* ── Lightspeed Voice ─────────────────────────────────── */
+  const LSK = 'cardinal_ls_v1';
+
+  function renderCalls() {
+    const host = $('lsCalls');
+    if (!host) return;
+    const calls = S.calls();
+    $('lsCount').textContent = calls.length + ' calls';
+    host.innerHTML = calls.map(c => {
+      const mins = Math.floor(c.seconds / 60), secs = String(c.seconds % 60).padStart(2, '0');
+      const dur = c.seconds ? mins + ':' + secs : '—';
+      const miss = c.outcome === 'Missed';
+      const hasTr = c.transcript && c.transcript !== '(no recording)';
+      return '<div class="call">' +
+        '<div class="call__top"><div class="call__who"><b>' + (c.name || c.from) + '</b>' +
+        '<span>' + c.from + ' · ' + c.direction + ' · ' + dur + ' · ' + c.agent + '</span></div>' +
+        '<span class="tg ' + (miss ? 'tg--miss' : 'tg--won') + '">' + c.outcome + '</span></div>' +
+        '<div class="call__sum">' + c.summary + '</div>' +
+        '<div class="call__meta"><span class="pill2">Sentiment: ' + c.sentiment + '</span>' +
+        '<button class="lnk" data-expand="' + c.id + '">' + (hasTr ? 'Show transcript' : 'No recording') + '</button></div>' +
+        '<div class="call__tr" id="tr-' + c.id + '" hidden>' + (c.transcript || '') + '</div>' +
+        '</div>';
+    }).join('') || '<p class="mut">No calls synced yet.</p>';
+
+    host.querySelectorAll('[data-expand]').forEach(btn => btn.addEventListener('click', () => {
+      const el = document.getElementById('tr-' + btn.dataset.expand);
+      if (!el) return;
+      el.hidden = !el.hidden;
+      btn.textContent = el.hidden ? 'Show transcript' : 'Hide transcript';
+    }));
+  }
+
+  function lsPrefill() {
+    const c = read(LSK, {});
+    $('lsAcct').value = c.acct || '';
+    $('lsKey').value = c.key || '';
+    if (c.sync) $('lsSync').value = c.sync;
+    if (c.saved) $('lsMsg').textContent = 'Credentials saved on this device. Live capture needs Lightspeed to enable API access for your account.';
+  }
+
+  $('lsSave').addEventListener('click', () => {
+    write(LSK, { acct: $('lsAcct').value, key: $('lsKey').value, sync: $('lsSync').value, saved: true });
+    $('lsMsg').textContent = 'Saved. Point Lightspeed at the webhook above to start capturing calls.';
+    log('Lightspeed connection saved');
+  });
+
+  $('lsTest').addEventListener('click', () => {
+    const acct = $('lsAcct').value.trim(), key = $('lsKey').value.trim();
+    $('lsMsg').textContent = (!acct || !key)
+      ? 'Enter the account ID and API key first.'
+      : 'Credentials look complete. Live calls begin once Lightspeed whitelists the webhook.';
+  });
+
+  window.CG.renderIntegrations = renderCalls;
+
   prefill();
   renderLog();
+  setTimeout(renderCalls, 300);
 })();

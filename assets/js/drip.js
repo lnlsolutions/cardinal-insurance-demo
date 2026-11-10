@@ -202,7 +202,7 @@
       '<div class="rt__h" style="margin-top:14px">Coverage gaps</div>' + xsell;
   }
 
-  function renderOwn() { renderQueue(); renderCampaigns(); renderPipeline(); renderRetention(); }
+  function renderOwn() { renderQueue(); renderCampaigns(); renderPipeline(); renderRetention(); if (window.CG.renderIntegrations) window.CG.renderIntegrations(); }
   window.CG.renderDrip = renderOwn;
 
   /* one entry point for every button in the dashboard */

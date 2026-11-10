@@ -9,6 +9,7 @@
     seeded: NS + '_seeded_v1',
     touches: NS + '_touches_v1',
     paused: NS + '_paused_v1',
+    calls: NS + '_calls_v1',
     snooze: NS + '_snooze_v1',
     claims: NS + '_claims_v1',
     notes: NS + '_notes_v1'
@@ -69,6 +70,13 @@
       write(K.clients, cs);
       return { added, policies: rows.length };
     },
+    calls: () => read(K.calls, []),
+    importCalls(rows) {
+      const all = this.calls();
+      rows.forEach(r => all.unshift(Object.assign({ id: uid('CALL-') }, r)));
+      write(K.calls, all);
+      return all;
+    },
     claims: () => read(K.claims, []),
     addClaim(c) {
       const all = this.claims();
@@ -123,6 +131,20 @@
       const add = demoLeads.filter(l => !seen.has(l.name.trim().toLowerCase()));
       write(K.leads, leads.concat(add));
       if (!clients.length) write(K.clients, demoClients);
+      if (!read(K.calls, []).length) write(K.calls, [
+        { id: 'CALL-8821', at: '2026-11-10T16:42:00Z', from: '(480) 555-0183', name: 'Jill Nakamura',
+          clientId: 'CL-1001', direction: 'Inbound', seconds: 214, outcome: 'Answered', agent: 'John C.',
+          sentiment: 'Positive', summary: 'Asked whether adding a teen driver changes her renewal. Confirmed the endorsement is 42 a month and she wants it added before the 14th.',
+          transcript: 'Jill: Hi, my daughter just got her permit... John: Congratulations. Let me pull your policy. Adding her will run about 42 a month... Jill: Go ahead and add it.' },
+        { id: 'CALL-8820', at: '2026-11-10T15:18:00Z', from: '(602) 989-6489', name: 'Unknown caller',
+          direction: 'Inbound', seconds: 0, outcome: 'Missed', agent: '—',
+          sentiment: 'Neutral', summary: 'Missed inbound call during a client meeting. No voicemail left. Text-back sent automatically within 30 seconds.',
+          transcript: '(no recording)' },
+        { id: 'CALL-8814', at: '2026-11-09T21:05:00Z', from: '(480) 555-0164', name: 'Tom Bledsoe',
+          clientId: 'CL-1002', direction: 'Inbound', seconds: 96, outcome: 'Answered', agent: 'Liz R.',
+          sentiment: 'Concerned', summary: 'Following up on the windshield claim, asked when the deductible is collected. Told him it is billed at completion, he was satisfied.',
+          transcript: 'Tom: I got the text that the glass is ordered... Liz: Yes, it arrives Thursday... Tom: Do I pay the deductible now or after?' }
+      ]);
       if (!read(K.claims, []).length) write(K.claims, [
         { id: 'CLM-2401', clientId: 'CL-1001', policy: 'AZ-HO-551903', type: 'Water damage', opened: '2026-08-14',
           status: 'Open', stage: 'Adjuster assigned', adjuster: 'M. Ruiz', reserve: 8400, paid: 0,

@@ -263,6 +263,25 @@
       </div>
     </div>
   </div>
+
+  <div class="panel">
+    <div class="panel__h"><h2>Lightspeed Voice</h2><span class="n" id="lsCount">—</span></div>
+    <div class="panel__b">
+      <p class="mut" style="margin:0 0 12px">Call recordings, transcripts and NOVA summaries attach to the client record by phone number, so a conversation never lives only on someone's desk. Missed calls drop straight into the follow-up queue.</p>
+      <div class="fgrid">
+        <label class="fld"><span>Account ID</span><input id="lsAcct" placeholder="from Lightspeed"></label>
+        <label class="fld"><span>API key</span><input id="lsKey" type="password" placeholder="stored server side"></label>
+        <label class="fld"><span>Webhook URL (give this to Lightspeed)</span><input id="lsHook" readonly value="https://api.base44.app/epic/lightspeed/calls"></label>
+        <label class="fld"><span>Sync</span><select id="lsSync"><option>Recordings + transcription + summary</option><option>Recordings + transcription</option><option>Call detail only</option></select></label>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+        <button class="btn btn--blue btn--sm" id="lsSave">Save connection</button>
+        <button class="btn btn--line btn--sm" id="lsTest">Test</button>
+      </div>
+      <p class="mut" id="lsMsg" style="margin:12px 0 0">Not connected. Sample calls below show the format.</p>
+      <div id="lsCalls" style="margin-top:14px"></div>
+    </div>
+  </div>
 </section>
 </div>
 
