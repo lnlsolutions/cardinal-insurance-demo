@@ -6,7 +6,10 @@
     leads: NS + '_leads_v1',
     clients: NS + '_clients_v1',
     msgs: NS + '_msgs_v1',
-    seeded: NS + '_seeded_v1'
+    seeded: NS + '_seeded_v1',
+    touches: NS + '_touches_v1',
+    paused: NS + '_paused_v1',
+    snooze: NS + '_snooze_v1'
   };
   const read = (k, fb) => { try { const v = JSON.parse(localStorage.getItem(k)); return v === null ? fb : v; } catch (e) { return fb; } };
   const write = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} };
@@ -34,6 +37,17 @@
       const leads = this.leads().map(l => l.id === id ? Object.assign({}, l, patch) : l);
       write(K.leads, leads);
     },
+    touches: () => read(K.touches, []),
+    logTouch(t) {
+      const all = this.touches();
+      all.unshift(Object.assign({ id: uid('T-'), at: new Date().toISOString() }, t));
+      write(K.touches, all);
+      return all;
+    },
+    paused: () => read(K.paused, {}),
+    setPaused(id, val) { const m = this.paused(); m[id] = !!val; write(K.paused, m); },
+    snoozes: () => read(K.snooze, {}),
+    snooze(key) { const m = this.snoozes(); m[key] = new Date(Date.now() + 864e5).toISOString(); write(K.snooze, m); },
     addMsg(m) {
       const all = this.msgs();
       all.unshift(Object.assign({ id: uid('M-'), at: new Date().toISOString(), from: 'client' }, m));

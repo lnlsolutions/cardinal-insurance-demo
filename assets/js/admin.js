@@ -154,6 +154,9 @@
 
   function renderAll() { renderKpis(); renderLeads(); renderFollowUps(); renderClients(); renderChannels(); }
 
+  window.CG.renderAdmin = renderAll;
+  window.CG.openLead = openLead;
+
   $('refresh').addEventListener('click', renderAll);
   $('addLead').addEventListener('click', () => {
     const names = ['Walk-in inquiry', 'Phone inquiry', 'Referral lead'];
