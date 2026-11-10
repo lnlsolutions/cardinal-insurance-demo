@@ -294,6 +294,22 @@
   </div>
 
   <div class="panel">
+    <div class="panel__h"><h2>Carrier downloads (Ivans)</h2><span class="n" id="ivCount">—</span></div>
+    <div class="panel__b">
+      <p class="mut" style="margin:0 0 12px">Ivans is the pipe carriers use to send policy, claims and commission data into Epic automatically. There is no single code: each carrier enables download for your agency and issues its own agency code. Track them here so nothing gets missed.</p>
+      <table class="ivt">
+        <thead><tr><th>Carrier</th><th>Agency code</th><th>Lines</th><th>Downloads</th><th>Status</th><th></th></tr></thead>
+        <tbody id="ivRows"></tbody>
+      </table>
+      <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+        <button class="btn btn--blue btn--sm" id="ivExport">Export request list</button>
+        <button class="btn btn--line btn--sm" id="ivAdd">Add carrier</button>
+      </div>
+      <p class="mut" id="ivMsg" style="margin:12px 0 0">Status is tracked per carrier. Enabled means the carrier is sending into Epic today.</p>
+    </div>
+  </div>
+
+  <div class="panel">
     <div class="panel__h"><h2>Lightspeed Voice</h2><span class="n" id="lsCount">—</span></div>
     <div class="panel__b">
       <p class="mut" style="margin:0 0 12px">Call recordings, transcripts and NOVA summaries attach to the client record by phone number, so a conversation never lives only on someone's desk. Missed calls drop straight into the follow-up queue.</p>
@@ -323,6 +339,7 @@
 <script src="assets/js/drip.js"></script>
 <script src="assets/js/integrations.js"></script>
 <script src="assets/js/popup-admin.js"></script>
+<script src="assets/js/ivans.js"></script>
 <script src="assets/js/growth.js"></script>
 </body>
 </html>
