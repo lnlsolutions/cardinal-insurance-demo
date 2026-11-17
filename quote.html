@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Quoting Engine — Cardinal Insurance Group</title>
+<meta name="description" content="Quote property and commercial risks against Cardinal guidelines, with taxes, fees, commission and payment structure shown before the quote goes out.">
+<style>
+  :root{--blue:#046DCD;--navy:#1B3A6B;--red:#C33E47;--ink:#101B2D;--mut:#5A677A;--line:#DCE3EE;--bg:#F4F7FC;--ok:#0F7B4F;--warn:#A9660A;--gold:#C08A2E}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.55}
+  a{color:var(--blue);text-decoration:none}
+  header{background:linear-gradient(135deg,#1B3A6B,#046DCD);color:#fff}
+  .bar{max-width:1200px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;gap:14px}
+  .mark{width:40px;height:40px;border-radius:10px;background:#fff;color:var(--navy);display:grid;place-items:center;font-weight:800}
+  .bar h1{font-size:16px;margin:0}
+  .bar span{display:block;font-size:12px;opacity:.75;font-weight:400}
+  .bar nav{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+  .bar nav a{color:#fff;font-size:13px;opacity:.85;padding:7px 11px;border-radius:8px}
+  .bar nav a.on,.bar nav a:hover{background:rgba(255,255,255,.14);opacity:1}
+  .hero{max-width:1200px;margin:0 auto;padding:0 24px 24px;color:#fff}
+  .hero h2{font-size:25px;margin:12px 0 6px}
+  .hero p{margin:0;opacity:.85;font-size:14px;max-width:760px}
+  main{max-width:1200px;margin:0 auto;padding:22px;display:grid;grid-template-columns:1.05fr .95fr;gap:16px}
+  @media(max-width:960px){main{grid-template-columns:1fr}}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-bottom:16px}
+  .card h3{margin:0 0 2px;font-size:15px}
+  .card .sub{color:var(--mut);font-size:12.5px;margin-bottom:12px}
+  .f{display:grid;grid-template-columns:1fr 1fr;gap:10px 12px}
+  .f.one{grid-template-columns:1fr}
+  label{display:block;font-size:11px;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+  input,select{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:9px;font:inherit;font-size:13.5px;background:#fff}
+  input:focus,select:focus{outline:2px solid #BFD8F5;border-color:var(--blue)}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:10px;padding:11px 16px;font:inherit;font-weight:600;font-size:14px;cursor:pointer;background:var(--blue);color:#fff}
+  .btn.ghost{background:#fff;color:var(--navy);border:1px solid var(--line)}
+  .btn.sm{padding:8px 12px;font-size:12.5px}
+  .qhead{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:12px}
+  .qhead .t{font-size:12px;color:var(--mut);text-transform:uppercase;letter-spacing:.08em}
+  .qhead .big{font-size:34px;font-weight:800;letter-spacing:-.5px;line-height:1.1}
+  .lines{font-size:13px}
+  .line{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed #EEF2F8}
+  .line b{font-weight:600}
+  .line.total{border-bottom:0;border-top:2px solid var(--navy);margin-top:6px;padding-top:9px;font-size:15px}
+  .line.neg{color:var(--ok)}
+  .tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+  .tab{font-size:12.5px;font-weight:600;padding:7px 12px;border-radius:20px;background:#EAF1FB;color:var(--blue);cursor:pointer;border:0;font-family:inherit}
+  .tab.on{background:var(--navy);color:#fff}
+  .pay{border:1px solid var(--line);border-radius:10px;padding:12px;background:#FAFCFF;font-size:13px}
+  .pay div{display:flex;justify-content:space-between;padding:3px 0}
+  .pay b{font-weight:700}
+  .pill{display:inline-block;font-size:11px;font-weight:700;padding:3px 8px;border-radius:20px;background:#EAF1FB;color:var(--blue)}
+  .pill.warn{background:#FDF1E0;color:var(--warn)}
+  .muted{color:var(--mut);font-size:12.5px}
+  .note{background:#F7FAFF;border-left:3px solid var(--blue);padding:10px 12px;border-radius:8px;font-size:12.5px;color:#33425A;margin-top:10px}
+  .gl{display:grid;grid-template-columns:1fr 1fr;gap:8px 12px}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);padding:8px;border-bottom:1px solid var(--line)}
+  td{padding:8px;border-bottom:1px solid #EEF2F8}
+  @media print{header,.hero,.noprint{display:none!important}main{grid-template-columns:1fr;padding:0}.card{border:0}}
+</style>
+</head>
+<body>
+<header>
+  <div class="bar">
+    <div class="mark">C</div>
+    <div><h1>Cardinal Insurance Group<span>Quoting engine · guideline driven</span></h1></div>
+    <nav>
+      <a href="upload.html">Intake</a>
+      <a href="quote.html" class="on">Quoting</a>
+      <a href="admin.html">CRM</a>
+      <a href="portal.html">Client portal</a>
+    </nav>
+  </div>
+  <div class="hero">
+    <h2>Every quote built the way Cardinal builds it.</h2>
+    <p>Set the guidelines once, quote in seconds, and send a client something that shows the premium, the taxes, the fees and exactly what each payment will be.</p>
+  </div>
+</header>
+
+<main>
+  <div>
+    <div class="card">
+      <h3>Risk</h3>
+      <div class="sub">Pick the carrier and product, then describe the risk.</div>
+      <div class="f">
+        <div><label>Carrier</label><select id="carrier"></select></div>
+        <div><label>Product</label><select id="product">
+          <option value="ho3">Homeowners HO-3</option>
+          <option value="dp3">Dwelling Fire DP-3</option>
+          <option value="bop">Commercial BOP</option>
+          <option value="auto">Personal Auto</option>
+        </select></div>
+        <div><label>Insured</label><input id="insured" placeholder="Name on the policy"></div>
+        <div><label>ZIP</label><input id="zip" placeholder="85234" maxlength="5"></div>
+        <div><label>Coverage / dwelling value</label><input id="coverage" type="number" value="420000" step="5000"></div>
+        <div><label>Deductible</label><select id="deductible">
+          <option value="1000">$1,000</option><option value="2500" selected>$2,500</option>
+          <option value="5000">$5,000</option><option value="10000">$10,000</option></select></div>
+        <div><label>Construction</label><select id="construction">
+          <option value="frame">Frame</option><option value="masonry" selected>Masonry / block</option>
+          <option value="superior">Superior / fire resistive</option></select></div>
+        <div><label>Protection class</label><select id="pclass">
+          <option value="1">1 · hydrant in 500 ft</option><option value="4" selected>4 · hydrant in 1,000 ft</option>
+          <option value="8">8 · rural, no hydrant</option></select></div>
+        <div><label>Claims in last 5 years</label><select id="claims">
+          <option value="0" selected>None</option><option value="1">1</option><option value="2">2 or more</option></select></div>
+        <div><label>Prior carrier</label><select id="prior">
+          <option value="yes" selected>Continuous coverage</option><option value="no">Lapse or new</option></select></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Guidelines</h3>
+      <div class="sub">These are the levers under the quote. Edit them and the quote updates, so a rate change from the carrier takes a minute, not a rebuild.</div>
+      <div class="gl" id="guide"></div>
+      <div class="note">Pilot model. The math is transparent and every factor is editable, so your filed rate tables drop straight in.</div>
+    </div>
+
+    <div class="card noprint">
+      <h3>Recent quotes</h3>
+      <div class="sub" id="qsub">Nothing saved yet.</div>
+      <table id="qtable"></table>
+    </div>
+  </div>
+
+  <div>
+    <div class="card" id="quoteCard">
+      <div class="qhead">
+        <div>
+          <div class="t">Annual premium</div>
+          <div class="big" id="bigPrem">$0</div>
+          <div class="muted" id="bigSub">Adjust the risk to price it</div>
+        </div>
+        <div style="text-align:right">
+          <span class="pill" id="elig">Eligible</span>
+          <div class="muted" id="qt">Quote CIG-Q-0000</div>
+        </div>
+      </div>
+
+      <div class="tabs" id="tabs">
+        <button class="tab on" data-pay="full">Pay in full</button>
+        <button class="tab" data-pay="4">4 pays</button>
+        <button class="tab" data-pay="10">10 pays</button>
+        <button class="tab" data-pay="12">12 pays</button>
+      </div>
+
+      <div class="lines" id="lines"></div>
+
+      <div class="pay" id="pay" style="margin-top:12px"></div>
+
+      <div class="f one noprint" style="margin-top:14px">
+        <div><label>Email the quote to</label><input id="qemail" placeholder="client@example.com"></div>
+      </div>
+      <div class="row noprint" style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+        <button class="btn" onclick="saveQuote()">Save quote</button>
+        <button class="btn ghost" onclick="window.print()">Print or PDF</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+const CARRIERS={
+  'Travelers':      {base:{ho3:4.15,dp3:5.60,bop:8.10,auto:0}, fee:35, tax:0.0195, min:340},
+  'The Hartford':   {base:{ho3:4.35,dp3:5.85,bop:7.60,auto:0}, fee:30, tax:0.0195, min:360},
+  'Safeco':         {base:{ho3:3.95,dp3:5.30,bop:8.40,auto:0}, fee:25, tax:0.0195, min:320},
+  'Nationwide':     {base:{ho3:4.55,dp3:6.10,bop:8.90,auto:0}, fee:40, tax:0.0195, min:380},
+  'Progressive':    {base:{ho3:4.70,dp3:6.40,bop:9.20,auto:6.20}, fee:20, tax:0.0195, min:300}
+};
+const TERRITORY={'850':1.18,'851':0.96,'852':0.92,'853':1.06,'855':1.02};
+const GUIDES={construction:{frame:1.22,masonry:1.0,superior:0.94},pclass:{'1':0.92,'4':1.0,'8':1.24},claims:{'0':1.0,'1':1.18,'2':1.42},prior:{yes:1.0,no:1.12}};
+const DEDUCT_CREDIT={1000:1.08,2500:1.0,5000:0.90,10000:0.80};
+const FIN={downPct:0.25, installmentFee:6, installmentAPR:0.0, brokerFeePct:0.0};
+
+let payMode='full';
+function el(id){return document.getElementById(id)}
+function money(n){return '$'+Math.round(n).toLocaleString()}
+function money2(n){return '$'+n.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2})}
+
+function fillCarriers(){
+  el('carrier').innerHTML=Object.keys(CARRIERS).map(c=>`<option>${c}</option>`).join('');
+}
+function fillGuides(){
+  el('guide').innerHTML=`
+    <div><label>Down payment %</label><input id="g_down" type="number" value="25" min="0" max="100"></div>
+    <div><label>Installment fee ($ each)</label><input id="g_fee" type="number" value="6" min="0"></div>
+    <div><label>Policy fee ($)</label><input id="g_pol" type="number" value="35" min="0"></div>
+    <div><label>Surplus lines tax %</label><input id="g_tax" type="number" value="1.95" step="0.05"></div>
+    <div><label>Territory factor</label><input id="g_terr" type="number" value="1.00" step="0.01"></div>
+    <div><label>Commission %</label><input id="g_comm" type="number" value="15" step="0.5"></div>`;
+  ['g_down','g_fee','g_pol','g_tax','g_terr','g_comm'].forEach(id=>el(id).addEventListener('input',calc));
+}
+
+function factorFor(id,map,dflt){ const v=el(id).value; return (map[v]!==undefined?map[v]:dflt) }
+
+function calc(){
+  const carrier=el('carrier').value, product=el('product').value;
+  const c=CARRIERS[carrier]||CARRIERS.Travelers;
+  const baseRate=c.base[product]||c.base.ho3;
+  if(!baseRate){
+    el('elig').textContent='Not offered'; el('elig').className='pill warn';
+    el('bigPrem').textContent='—'; el('bigSub').textContent=carrier+' does not write this product in the pilot';
+    el('lines').innerHTML=''; el('pay').innerHTML=''; return;
+  }
+  el('elig').className='pill';
+  const coverage=Number(el('coverage').value)||0;
+  const zip=el('zip').value||'';
+  const terrPref=el('g_terr').value?Number(el('g_terr').value):1;
+  const terr=(TERRITORY[zip.slice(0,3)]||1.05)*terrPref;
+  const ded=DEDUCT_CREDIT[el('deductible').value]||1;
+  const con=factorFor('construction',GUIDES.construction,1);
+  const pc=factorFor('pclass',GUIDES.pclass,1);
+  const cl=factorFor('claims',GUIDES.claims,1);
+  const pr=factorFor('prior',GUIDES.prior,1);
+
+  const base=coverage/1000*baseRate;
+  const rated=base*terr*ded*con*pc*cl*pr;
+  const policyFee=Number(el('g_pol').value)||0;
+  const taxPct=Number(el('g_tax').value)||0;
+  const tax=rated*taxPct/100;
+  const total=Math.max(c.min, rated)+policyFee+tax;
+  const commPct=Number(el('g_comm').value)||0;
+  const commission=rated*commPct/100;
+
+  const rows=[
+    ['Base rate', `${money(coverage/1000*baseRate)} · ${coverage.toLocaleString()} of coverage at $${baseRate}/1,000`],
+    ['Territory', `${terr.toFixed(2)}x · ZIP ${zip||'—'}`],
+    ['Deductible', `${ded.toFixed(2)}x · ${money(Number(el('deductible').value))} deductible`],
+    ['Construction', `${con.toFixed(2)}x · ${el('construction').value}`],
+    ['Protection class', `${pc.toFixed(2)}x · class ${el('pclass').value}`],
+    ['Claims history', `${cl.toFixed(2)}x · ${el('claims').value} claim(s)`],
+    ['Prior coverage', `${pr.toFixed(2)}x`]
+  ];
+  el('lines').innerHTML=rows.map(([k,v])=>`<div class="line"><span>${k}</span><span class="muted">${v}</span></div>`).join('')
+    +`<div class="line"><b>Rated premium</b><b>${money2(rated)}</b></div>`
+    +`<div class="line"><span>Policy fee</span><span>${money2(policyFee)}</span></div>`
+    +`<div class="line"><span>Surplus lines tax (${taxPct}%)</span><span>${money2(tax)}</span></div>`
+    +`<div class="line total"><span>Total annual premium</span><span>${money2(total)}</span></div>`
+    +`<div class="line"><span class="muted">Agency commission (${commPct}%)</span><span class="muted">${money2(commission)}</span></div>`;
+
+  el('bigPrem').textContent=money(total);
+  el('bigSub').textContent=`${carrier} · ${el('product').selectedOptions[0].text} · ${zip||'ZIP pending'}`;
+  el('qt').textContent='Quote CIG-Q-'+(String(Date.now()).slice(-4));
+
+  const downPct=Number(el('g_down').value)/100;
+  const fee=Number(el('g_fee').value)||0;
+  let payHtml='';
+  if(payMode==='full'){
+    payHtml=`<div><span>One payment</span><b>${money2(total)}</b></div>
+      <div><span>Includes</span><span>${money2(rated+policyFee+tax)}</span></div>`;
+  }else{
+    const n=Number(payMode);
+    const down=total*downPct + fee;
+    const rest=total-down;
+    const per=rest/(n-1);
+    payHtml=`<div><span>Down payment (${Math.round(downPct*100)}% + fee)</span><b>${money2(down)}</b></div>
+      <div><span>${n-1} monthly payments</span><b>${money2(per)} each</b></div>
+      <div><span>Total you pay</span><b>${money2(total+fee)}</b></div>
+      <div><span>Cost of the plan</span><span>${money2(fee)}</span></div>`;
+  }
+  el('pay').innerHTML=payHtml;
+  el('quoteCard').dataset.total=total.toFixed(2);
+}
+
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
+  t.classList.add('on'); payMode=t.dataset.pay; calc();
+}));
+['carrier','product','coverage','zip','deductible','construction','pclass','claims','prior'].forEach(id=>el(id).addEventListener('input',calc));
+
+function saveQuote(){
+  const q={id:'CIG-Q-'+String(Date.now()).slice(-5),insured:el('insured').value||'Unnamed risk',carrier:el('carrier').value,
+    product:el('product').selectedOptions[0].text,total:Number(el('quoteCard').dataset.total||0),pay:payMode,zip:el('zip').value,
+    email:el('qemail').value,saved:new Date().toISOString().slice(0,10)};
+  const all=JSON.parse(localStorage.getItem('card_quotes')||'[]'); all.unshift(q);
+  localStorage.setItem('card_quotes',JSON.stringify(all.slice(0,25)));
+  renderQuotes();
+  alert('Quote saved. It now shows on the client record and in the portal.');
+}
+function renderQuotes(){
+  const all=JSON.parse(localStorage.getItem('card_quotes')||'[]');
+  el('qsub').textContent=all.length?`${all.length} saved · most recent first`:'Nothing saved yet.';
+  el('qtable').innerHTML= all.length? '<tr><th>Quote</th><th>Insured</th><th>Carrier</th><th>Premium</th><th>Plan</th><th>Date</th></tr>'+
+    all.map(q=>`<tr><td>${q.id}</td><td>${q.insured}</td><td>${q.carrier}</td><td>${money(q.total)}</td><td>${q.pay==='full'?'Pay in full':q.pay+' pays'}</td><td>${q.saved}</td></tr>`).join('')
+    : '';
+}
+
+fillCarriers(); fillGuides(); calc(); renderQuotes();
+</script>
+</body>
+</html>
