@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cardinal Insurance Group — Production & Service Dashboard</title>
+<style>
+:root{--blue:#046DCD;--navy:#1B3A6B;--red:#C33E47;--ink:#16233A;--mut:#64748B;--line:#E2E8F2;--bg:#F4F7FC;--ok:#0F8A5F;--warn:#B4790B}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.top{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:30}
+.top__in{max-width:1320px;margin:0 auto;padding:0 22px;height:62px;display:flex;align-items:center;gap:18px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.01em}
+.mark{width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,var(--blue),var(--navy));color:#fff;display:grid;place-items:center;font-size:12px;font-weight:800}
+.brand span{font-size:11px;color:var(--mut);font-weight:600;display:block;letter-spacing:.02em}
+.nav{display:flex;gap:4px;margin-left:8px}
+.nav a{padding:8px 12px;border-radius:8px;font-size:13.5px;font-weight:600;color:#3D4C63}
+.nav a:hover{background:#EEF4FC}
+.nav a.on{background:#E8F1FD;color:var(--blue)}
+.spacer{flex:1}
+.pill{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;background:#E7F6EE;color:var(--ok);border:1px solid #BFE6D2;padding:5px 10px;border-radius:20px}
+.wrap{max-width:1320px;margin:0 auto;padding:22px}
+h1{font-size:23px;letter-spacing:-.02em}
+.sub{color:var(--mut);font-size:13px;margin-top:4px}
+.head{display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+.tabs{display:flex;gap:6px;margin:16px 0 18px;flex-wrap:wrap}
+.tab{padding:9px 14px;border-radius:9px;background:#fff;border:1px solid var(--line);font-size:13px;font-weight:700;color:#43536B;cursor:pointer}
+.tab.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:16px}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:13px;padding:14px 15px}
+.kpi .l{font-size:10.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--mut)}
+.kpi .v{font-size:24px;font-weight:800;letter-spacing:-.02em;margin-top:6px}
+.kpi .d{font-size:11.5px;margin-top:5px;color:var(--mut)}
+.kpi .d.up{color:var(--ok)}.kpi .d.dn{color:var(--red)}
+.card{background:#fff;border:1px solid var(--line);border-radius:13px;padding:16px 17px}
+.card h2{font-size:14px;letter-spacing:-.01em}
+.card .s{font-size:12px;color:var(--mut);margin-top:3px;margin-bottom:12px}
+.grid2{display:grid;grid-template-columns:1.25fr 1fr;gap:14px;align-items:start}
+.stack{display:flex;flex-direction:column;gap:14px}
+table{width:100%;border-collapse:collapse}
+th{font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);text-align:left;padding:8px 8px;border-bottom:1px solid var(--line);font-weight:800;cursor:pointer;white-space:nowrap}
+td{padding:9px 8px;border-bottom:1px solid #EFF3F9;font-size:13px;vertical-align:middle}
+tr:last-child td{border-bottom:0}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+.tag{display:inline-block;font-size:10.5px;font-weight:800;padding:3px 8px;border-radius:20px;letter-spacing:.03em}
+.t-ok{background:#E7F6EE;color:#0F7A54}.t-warn{background:#FDF3DF;color:#946008}.t-bad{background:#FDEDEE;color:#A62B34}.t-mut{background:#EEF2F7;color:#5A6A80}
+.bars{display:flex;align-items:flex-end;gap:9px;height:150px;padding-top:8px}
+.bar{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:6px}
+.bar i{display:block;width:100%;border-radius:5px 5px 2px 2px;background:linear-gradient(180deg,#4C9BE8,#046DCD)}
+.bar b{font-size:9.5px;color:var(--mut);font-weight:700;letter-spacing:.04em}
+.bar u{font-size:10px;color:#43536B;text-decoration:none;font-weight:700}
+.prod{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid #EFF3F9}
+.prod:last-child{border-bottom:0}
+.av{width:34px;height:34px;border-radius:50%;background:#E8F1FD;color:var(--blue);display:grid;place-items:center;font-size:12px;font-weight:800;flex:none}
+.prod .who{flex:1;min-width:0}
+.prod .who b{display:block;font-size:13px}
+.prod .who span{font-size:11.5px;color:var(--mut)}
+.prog{height:7px;background:#EEF2F7;border-radius:6px;overflow:hidden;margin-top:6px}
+.prog i{display:block;height:100%;background:linear-gradient(90deg,#046DCD,#1B3A6B)}
+.prog.warn i{background:linear-gradient(90deg,#E0A63C,#B4790B)}
+.goalbox{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--mut)}
+input,select,textarea{font:inherit;font-size:13px;padding:7px 9px;border:1px solid #D5DEEA;border-radius:8px;background:#fff;color:var(--ink)}
+input:focus,select:focus,textarea:focus{outline:2px solid #C9DEFB;border-color:var(--blue)}
+.btn{padding:8px 13px;border-radius:8px;border:1px solid transparent;font-size:12.5px;font-weight:700;cursor:pointer;background:#EDF2F9;color:#2C3A50}
+.btn.pri{background:var(--blue);color:#fff}
+.btn.dan{background:#FDEDEE;color:#A62B34;border-color:#F3CDD0}
+.btn.sm{padding:5px 9px;font-size:11.5px}
+.oootag{background:#FDEDEE;color:#A62B34}
+.cov{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.covcard{flex:1;min-width:220px;border:1px dashed #CBD8E8;border-radius:10px;padding:10px 12px;font-size:12.5px;background:#FAFCFF}
+.covcard b{font-size:12.5px}
+.task{display:grid;grid-template-columns:auto 1fr auto auto;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid #EFF3F9}
+.task:last-child{border-bottom:0}
+.chk{width:18px;height:18px;border-radius:5px;border:1.5px solid #C3D0E2;cursor:pointer;flex:none}
+.chk.on{background:var(--ok);border-color:var(--ok);position:relative}
+.chk.on:after{content:'✓';color:#fff;font-size:12px;position:absolute;inset:-2px 0 0 2px;font-weight:800}
+.task .t1{font-size:13px;font-weight:600}
+.task .t2{font-size:11.5px;color:var(--mut);margin-top:2px}
+.done .t1{text-decoration:line-through;color:#8A97A8}
+.hide{display:none}
+.modal{position:fixed;inset:0;background:rgba(16,28,45,.5);display:none;place-items:center;z-index:60;padding:20px}
+.modal.on{display:grid}
+.mbox{background:#fff;border-radius:16px;padding:20px;max-width:520px;width:100%;box-shadow:0 24px 60px rgba(16,28,45,.25)}
+.mbox h3{font-size:16px;margin-bottom:6px}
+.mbox p{font-size:13px;color:var(--mut);margin-bottom:14px;line-height:1.5}
+.fld{margin-bottom:11px}
+.fld label{display:block;font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--mut);margin-bottom:5px}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.log{font-size:12px;color:#43536B;padding:8px 0;border-bottom:1px solid #EFF3F9}
+.log b{color:var(--ink)}
+@media(max-width:1080px){.kpis{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="top"><div class="top__in">
+  <div class="brand"><div class="mark">CIG</div><div>Cardinal Insurance Group<span>Production &amp; service</span></div></div>
+  <nav class="nav">
+    <a href="admin.html">Admin</a>
+    <a href="carriers.html">Carrier connections</a>
+    <a href="upload.html">Data intake</a>
+    <a href="quote.html">Quote engine</a>
+    <a href="portal.html">Client portal</a>
+    <a class="on" href="dashboard.html">Production</a>
+  </nav>
+  <div class="spacer"></div>
+  <span class="pill">Live</span>
+</div></div>
+<div class="wrap">
+  <div class="head">
+    <div>
+      <h1>Production &amp; service</h1>
+      <div class="sub" id="asof">Book of business today</div>
+    </div>
+    <div class="spacer"></div>
+    <button class="btn sm" onclick="resetAll()">Reset demo data</button>
+  </div>
+  <div class="kpis" id="kpis"></div>
+  <div class="tabs">
+    <div class="tab on" data-v="overview">Overview</div>
+    <div class="tab" data-v="renewals">Renewals</div>
+    <div class="tab" data-v="team">Team &amp; goals</div>
+    <div class="tab" data-v="tasks">Tasks &amp; coverage</div>
+  </div>
+  <section id="v-overview"></section>
+  <section id="v-renewals" class="hide"></section>
+  <section id="v-team" class="hide"></section>
+  <section id="v-tasks" class="hide"></section>
+</div>
+<div class="modal" id="modal"><div class="mbox" id="mbox"></div></div>
+<script>
+const KEY='card_prod_v1';
+const money=n=>'$'+(Number(n)||0).toLocaleString('en-US',{maximumFractionDigits:0});
+const d0=new Date(2026,10,17); // Nov 17 2026 reference
+function dayAdd(n){const d=new Date(d0);d.setDate(d.getDate()+n);return d}
+function fmt(d){return d.toLocaleDateString('en-US',{month:'short',day:'numeric'})}
+function iso(d){return d.toISOString().slice(0,10)}
+function daysOut(s){const t=new Date(s+'T00:00:00');return Math.round((t-d0)/86400000)}
+
+const SEED={
+ book:{accounts:325,policies:593,premium:1097012,carriers:51,categories:26},
+ nb:[{m:'Jan',p:21980,c:12},{m:'Feb',p:24310,c:14},{m:'Mar',p:19450,c:11},{m:'Apr',p:27900,c:16},{m:'May',p:26120,c:15},{m:'Jun',p:23480,c:13},{m:'Jul',p:29750,c:17},{m:'Aug',p:31240,c:18},{m:'Sep',p:18600,c:10},{m:'Oct',p:22870,c:13},{m:'Nov',p:29600,c:16}],
+ goalMonth:34000,
+ renewals:[
+  {c:'Hollis Family Trust',car:'Safeco',line:'Homeowners',p:4120,o:0,d:+2,s:'Quoted'},
+  {c:'Rancho Verde Dental',car:'The Hartford',line:'BOP',p:9840,o:1,d:+4,s:'Review'},
+  {c:'M. Okafor',car:'Progressive',line:'Auto',p:2380,o:0,d:+6,s:'Confirmed'},
+  {c:'Sunrise Logistics LLC',car:'Travelers',line:'Commercial Auto',p:14250,o:2,d:+9,s:'At risk'},
+  {c:'Delgado Property Group',car:'Foremost',line:'Dwelling Fire',p:3260,o:3,d:+13,s:'Confirmed'},
+  {c:'P. & L. Whitcomb',car:'Nationwide',line:'Home + Auto',p:5240,o:1,d:+17,s:'Quoted'},
+  {c:'Basil Court HOA',car:'Chubb',line:'Package',p:18700,o:2,d:+21,s:'Review'},
+  {c:'T. Ferraro',car:'Mercury',line:'Auto',p:1980,o:0,d:+24,s:'Confirmed'},
+  {c:'Arizona Stucco Co',car:'Openly',line:'BOP',p:6240,o:3,d:+31,s:'Quoted'},
+  {c:'R. & S. Kaminski',car:'Stillwater',line:'Homeowners',p:3890,o:1,d:+38,s:'Review'},
+  {c:'Cactus Bloom Cafe',car:'Bristol West',line:'BOP',p:4450,o:2,d:+52,s:'Confirmed'},
+  {c:'N. Abebe',car:'Safeco',line:'Renters + Auto',p:2150,o:0,d:+61,s:'Quoted'},
+  {c:'Verde Valley Transport',car:'Travelers',line:'Commercial Auto',p:16400,o:2,d:+74,s:'At risk'},
+  {c:'J. & M. Pruitt',car:'Nationwide',line:'Homeowners',p:4480,o:3,d:+88,s:'Confirmed'}
+ ],
+ team:[
+  {n:'J. Nguyen',r:'Personal lines',goal:22000,nb:16400,pol:41,ret:94,days:3.2},
+  {n:'M. Reyes',r:'Commercial',goal:26000,nb:24100,pol:12,ret:91,days:6.8},
+  {n:'D. Foster',r:'Personal lines',goal:18000,nb:11200,pol:28,ret:88,days:4.4},
+  {n:'S. Patel',r:'Life & benefits',goal:12000,nb:9600,pol:9,ret:96,days:5.1}
+ ],
+ tasks:[
+  {t:'Call on Safeco renewal, confirm coverage changes',who:0,due:0,k:'Renewal'},
+  {t:'Send binder to Sunrise Logistics',who:2,due:0,k:'New business'},
+  {t:'Chase signed application, Rancho Verde Dental',who:1,due:1,k:'Renewal'},
+  {t:'Quote umbrella for Kaminski household',who:3,due:2,k:'Cross-sell'},
+  {t:'Order inspection, Delgado dwelling',who:2,due:3,k:'Policy service'},
+  {t:'Follow up on claim adjuster callback',who:0,due:0,k:'Claim'},
+  {t:'Confirm payment plan change, T. Ferraro',who:0,due:4,k:'Billing'},
+  {t:'Referral thank-you note, Whitcomb',who:1,due:5,k:'Relationship'},
+  {t:'Re-quote Basil Court HOA before renewal',who:2,due:6,k:'Renewal'},
+  {t:'Text photos of dec page to Cactus Bloom Cafe',who:1,due:7,k:'Policy service'},
+  {t:'Review loss runs, Verde Valley',who:2,due:9,k:'Renewal'},
+  {t:'Annual review booking, Abebe family',who:0,due:11,k:'Relationship'}
+ ],
+ cover:[], log:[]
+};
+let S=load();
+function load(){try{const r=localStorage.getItem(KEY);if(r)return JSON.parse(r)}catch(e){}return JSON.parse(JSON.stringify(SEED))}
+function save(){localStorage.setItem(KEY,JSON.stringify(S))}
+function resetAll(){if(confirm('Reset to the sample book?')){localStorage.removeItem(KEY);S=JSON.parse(JSON.stringify(SEED));render()}}
+
+function goalTotal(){return S.team.reduce((a,t)=>a+t.goal,0)}
+function nbTotal(){return S.team.reduce((a,t)=>a+t.nb,0)}
+function teamNB(){return S.team.reduce((a,t)=>a+t.nb,0)}
+
+function renderKpis(){
+ const nbMTD=S.nb[S.nb.length-1].p;
+ const goals=goalTotal(), sold=nbTotal();
+ const rens=S.renewals.filter(r=>r.d>=0);
+ const n30=rens.filter(r=>r.d<=30), n60=rens.filter(r=>r.d<=60), n90=rens.filter(r=>r.d<=90);
+ const p30=n30.reduce((a,r)=>a+r.p,0);
+ const risk=rens.filter(r=>r.s==='At risk').length;
+ const out=S.team.filter((t,i)=>S.cover.some(c=>c.out===i)).length;
+ const openTasks=S.tasks.filter(t=>!t.done).length;
+ document.getElementById('kpis').innerHTML=`
+ <div class="kpi"><div class="l">Book premium</div><div class="v">${money(S.book.premium)}</div><div class="d">${S.book.policies} policies · ${S.book.accounts} accounts</div></div>
+ <div class="kpi"><div class="l">New business MTD</div><div class="v">${money(nbMTD)}</div><div class="d ${nbMTD>=S.goalMonth?'up':'dn'}">${S.nb[S.nb.length-1].c} policies · ${Math.round(nbMTD/S.goalMonth*100)}% of ${money(S.goalMonth)} goal</div></div>
+ <div class="kpi"><div class="l">Renewals next 30 days</div><div class="v">${money(p30)}</div><div class="d">${n30.length} policies · ${risk} at risk</div></div>
+ <div class="kpi"><div class="l">Team vs goal</div><div class="v">${Math.round(sold/goals*100)}%</div><div class="d">${money(sold)} of ${money(goals)}</div></div>
+ <div class="kpi"><div class="l">Open tasks</div><div class="v">${openTasks}</div><div class="d ${out?'dn':''}">${out?out+' teammate out of office':'All hands on deck'}</div></div>`;
+ document.getElementById('asof').textContent='Book of business · Tuesday, November 17, 2026';
+}
+
+function renderOverview(){
+ const max=Math.max(...S.nb.map(b=>b.p));
+ const bars=S.nb.map(b=>`<div class="bar"><u>${(b.p/1000).toFixed(1)}k</u><i style="height:${Math.round(b.p/max*118)}px"></i><b>${b.m}</b></div>`).join('');
+ const n90=S.renewals.filter(r=>r.d<=90).sort((a,b)=>a.d-b.d).slice(0,6);
+ const rows=n90.map(r=>`<tr><td>${fmt(dayAdd(r.d))}</td><td><b>${r.c}</b><div class="t2" style="font-size:11.5px;color:var(--mut)">${r.car} · ${r.line} · ${S.team[r.o].n}</div></td><td class="num">${money(r.p)}</td><td><span class="tag ${r.s==='Confirmed'?'t-ok':r.s==='At risk'?'t-bad':'t-warn'}">${r.s}</span></td></tr>`).join('');
+ const team=S.team.map((t,i)=>{
+   const pct=Math.round(t.nb/t.goal*100);
+   return `<div class="prod"><div class="av">${t.n[0]}${t.n.split(' ')[1][0]}</div><div class="who"><b>${t.n}</b><span>${t.r} · ${t.pol} policies · ${t.ret}% retention</span><div class="prog ${pct<70?'warn':''}"><i style="width:${Math.min(pct,100)}%"></i></div></div><div style="text-align:right"><b style="font-size:13px">${money(t.nb)}</b><div style="font-size:11px;color:var(--mut)">${pct}% of ${money(t.goal)}</div></div></div>`;
+ }).join('');
+ document.getElementById('v-overview').innerHTML=`
+ <div class="grid2">
+  <div class="card"><h2>New business premium by month</h2><div class="s">Written premium, 2026 · November is month to date</div>
+   <div class="bars">${bars}</div>
+   <div style="display:flex;gap:18px;margin-top:12px;font-size:12px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px">
+     <div>YTD new business <b style="color:var(--ink)">${money(S.nb.reduce((a,b)=>a+b.p,0))}</b></div>
+     <div>Policies <b style="color:var(--ink)">${S.nb.reduce((a,b)=>a+b.c,0)}</b></div>
+     <div>Avg policy <b style="color:var(--ink)">${money(S.nb.reduce((a,b)=>a+b.p,0)/S.nb.reduce((a,b)=>a+b.c,0))}</b></div>
+     <div>Monthly goal <b style="color:var(--ink)">${money(S.goalMonth)}</b></div>
+   </div>
+  </div>
+  <div class="card"><h2>Renewals coming due</h2><div class="s">Next 90 days, soonest first</div>
+   <table><thead><tr><th>Date</th><th>Account</th><th class="num">Premium</th><th>Status</th></tr></thead><tbody>${rows}</tbody></table>
+  </div>
+ </div>
+ <div class="grid2" style="margin-top:14px">
+  <div class="card"><h2>Producer scoreboard</h2><div class="s">New business written this month against individual goals</div>${team}</div>
+  <div class="card"><h2>Today's attention</h2><div class="s">Tasks due now, by owner</div>${S.tasks.filter(t=>!t.done&&t.due<=1).slice(0,5).map(t=>`<div class="task"><div class="chk" onclick="toggleTask('${t.t}')"></div><div><div class="t1">${t.t}</div><div class="t2">${S.team[t.who].n} · ${t.k} · ${t.due===0?'due today':'due tomorrow'}</div></div><span class="tag t-mut">${t.k}</span></div>`).join('')||'<div style="font-size:13px;color:var(--mut)">Nothing due. Good day for prospecting.</div>'}
+  </div>
+ </div>`;
+}
+let rWin=30, rSort='d';
+function renderRenewals(){
+ const list=S.renewals.filter(r=>r.d>=0&&r.d<=rWin).sort((a,b)=> rSort==='d'?a.d-b.d : rSort==='p'?b.p-a.p : a.c.localeCompare(b.c));
+ const prem=list.reduce((a,r)=>a+r.p,0);
+ const atRisk=list.filter(r=>r.s==='At risk');
+ document.getElementById('v-renewals').innerHTML=`
+ <div class="card">
+  <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:4px">
+    <div><h2>Renewal book</h2><div class="s" style="margin-bottom:0">${money(prem)} in premium renewing across ${list.length} policies</div></div>
+    <div class="spacer" style="flex:1"></div>
+    <select id="rwin" onchange="rWin=+this.value;render()">
+      ${[30,60,90,180].map(w=>`<option value="${w}" ${w===rWin?'selected':''}>Next ${w} days</option>`).join('')}
+    </select>
+  </div>
+  ${atRisk.length?`<div style="margin:12px 0;padding:10px 12px;border-radius:10px;background:#FDEDEE;color:#A62B34;font-size:12.5px;font-weight:600">${atRisk.length} renewals marked at risk · ${money(atRisk.reduce((a,r)=>a+r.p,0))} of premium needs a call this week</div>`:''}
+  <table>
+   <thead><tr><th onclick="rSort='d';render()">Renews ${rSort==='d'?'↓':''}</th><th onclick="rSort='c';render()">Account ${rSort==='c'?'↓':''}</th><th>Carrier · line</th><th>Owner</th><th class="num" onclick="rSort='p';render()">Premium ${rSort==='p'?'↓':''}</th><th>Status</th><th></th></tr></thead>
+   <tbody>${list.map(r=>`<tr>
+     <td><b>${fmt(dayAdd(r.d))}</b><div style="font-size:11px;color:var(--mut)">${r.d===0?'today':'in '+r.d+' days'}</div></td>
+     <td><b>${r.c}</b></td><td>${r.car} · ${r.line}</td><td>${S.team[r.o].n}</td>
+     <td class="num">${money(r.p)}</td>
+     <td><span class="tag ${r.s==='Confirmed'?'t-ok':r.s==='At risk'?'t-bad':'t-warn'}">${r.s}</span></td>
+     <td><button class="btn sm" onclick="markRenewal(${S.renewals.indexOf(r)})">${r.s==='Confirmed'?'Log note':'Confirm'}</button></td>
+   </tr>`).join('')}</tbody>
+  </table>
+ </div>`;
+}
+function markRenewal(i){
+ const r=S.renewals[i];
+ if(r.s!=='Confirmed'){r.s='Confirmed';pushLog(`Renewal confirmed: ${r.c} · ${money(r.p)}`);}
+ else{pushLog(`Note logged on ${r.c}`);}
+ save();render();
+}
+
+function renderTeam(){
+ const goals=goalTotal();
+ document.getElementById('v-team').innerHTML=`
+ <div class="card">
+  <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+   <div><h2>Team production</h2><div class="s" style="margin-bottom:0">Editable goals. Bars update as premium is written.</div></div>
+   <div class="spacer" style="flex:1"></div>
+   <div class="goalbox">Monthly team goal <b style="color:var(--ink)">${money(goals)}</b></div>
+  </div>
+  <table style="margin-top:12px">
+   <thead><tr><th>Producer</th><th>Focus</th><th class="num">New business</th><th class="num">Goal</th><th>Attainment</th><th class="num">Policies</th><th class="num">Retention</th><th class="num">Days to close</th></tr></thead>
+   <tbody>${S.team.map((t,i)=>{const pct=Math.round(t.nb/t.goal*100);return `<tr>
+     <td><b>${t.n}</b>${S.cover.some(c=>c.out===i)?' <span class="tag oootag">OOO</span>':''}</td>
+     <td>${t.r}</td><td class="num">${money(t.nb)}</td>
+     <td class="num"><input type="number" value="${t.goal}" style="width:96px;text-align:right" onchange="setGoal(${i},this.value)"></td>
+     <td style="min-width:130px"><div class="prog ${pct<70?'warn':''}"><i style="width:${Math.min(pct,100)}%"></i></div><div style="font-size:11px;color:var(--mut);margin-top:3px">${pct}%</div></td>
+     <td class="num">${t.pol}</td><td class="num">${t.ret}%</td><td class="num">${t.days}</td>
+   </tr>`}).join('')}</tbody>
+  </table>
+  <div style="display:flex;gap:20px;margin-top:14px;padding-top:12px;border-top:1px solid var(--line);font-size:12.5px;color:var(--mut);flex-wrap:wrap">
+    <div>Written <b style="color:var(--ink)">${money(teamNB())}</b></div>
+    <div>Remaining to goal <b style="color:var(--ink)">${money(Math.max(goals-teamNB(),0))}</b></div>
+    <div>Avg premium per policy <b style="color:var(--ink)">${money(teamNB()/S.team.reduce((a,t)=>a+t.pol,0))}</b></div>
+    <div>Team retention <b style="color:var(--ink)">${Math.round(S.team.reduce((a,t)=>a+t.ret,0)/S.team.length)}%</b></div>
+  </div>
+ </div>`;
+}
+function setGoal(i,v){S.team[i].goal=Math.max(0,+v||0);save();render()}
+
+function renderTasks(){
+ const cov=S.cover.map(c=>`<div class="covcard"><b>${S.team[c.out].n}</b> out until ${fmt(dayAdd(c.days))}<br>Covered by <b>${S.team[c.cover].n}</b> · ${S.tasks.filter(t=>!t.done&&t.who===c.out).length} open items${c.days>=7?'<br><button class="btn sm" style="margin-top:8px" onclick="endCover('+c.out+')">Return to office</button>':''}</div>`).join('');
+ const open=S.tasks.filter(t=>!t.done);
+ const groups=S.team.map((t,i)=>`<div style="margin-bottom:14px"><div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><div class="av" style="width:26px;height:26px;font-size:11px">${t.n[0]}${t.n.split(' ')[1][0]}</div><b style="font-size:13px">${t.n}</b><span style="font-size:11.5px;color:var(--mut)">${open.filter(x=>x.who===i).length} open</span>${S.cover.some(c=>c.out===i)?'<span class="tag oootag">OOO</span>':''}</div>
+ ${S.tasks.map((x,ix)=>{if(x.who!==i)return '';return `<div class="task ${x.done?'done':''}"><div class="chk ${x.done?'on':''}" onclick="toggleTask(${ix})"></div><div><div class="t1">${x.t}</div><div class="t2">${x.k} · ${x.done?'completed':x.due===0?'due today':'due '+fmt(dayAdd(x.due))}${S.cover.some(c=>c.out===i)&&!x.done?' · covering: '+S.team[S.cover.find(c=>c.out===i).cover].n:''}</div></div><span class="tag ${x.due===0&&!x.done?'t-bad':'t-mut'}">${x.due===0&&!x.done?'Today':x.k}</span><button class="btn sm" onclick="reassign(${ix})">Reassign</button></div>`}).join('')}</div>`).join('');
+ document.getElementById('v-tasks').innerHTML=`
+ <div class="grid2">
+  <div class="card"><h2>Tasks and follow-ups</h2><div class="s">Grouped by owner. Anyone can pick up a task when someone is out.</div>
+   <div style="display:flex;gap:8px;margin-bottom:14px"><input id="nt" placeholder="Add a task for the team" style="flex:1"><button class="btn pri" onclick="addTask()">Add</button></div>
+   ${groups}
+  </div>
+  <div class="stack">
+   <div class="card"><h2>Out-of-office coverage</h2><div class="s">Assign who carries the book while someone is away.</div>
+    <div class="row"><button class="btn pri" onclick="openCover()">Set coverage</button></div>
+    <div class="cov">${cov||'<div style="font-size:12.5px;color:var(--mut)">No one is out. Everyone’s tasks are with them.</div>'}</div>
+   </div>
+   <div class="card"><h2>Activity log</h2><div class="s">Who touched what, and when</div>
+    ${S.log.slice(0,8).map(l=>`<div class="log">${l}</div>`).join('')||'<div style="font-size:12.5px;color:var(--mut)">No activity yet today.</div>'}
+   </div>
+  </div>
+ </div>`;
+}
+function toggleTask(ix){S.tasks[ix].done=!S.tasks[ix].done;pushLog(`${S.tasks[ix].done?'Completed':'Reopened'}: ${S.tasks[ix].t}`);save();render()}
+function addTask(){const v=document.getElementById('nt').value.trim();if(!v)return;S.tasks.unshift({t:v,who:0,due:1,k:'General',done:false});pushLog('Task added: '+v);save();render()}
+function reassign(ix){
+ const t=S.tasks[ix];
+ const opts=S.team.map((x,i)=>i===t.who?'':`<option value="${i}">${x.n}</option>`).join('');
+ open(`<h3>Reassign task</h3><p>${t.t}</p>
+  <div class="fld"><label>Move to</label><select id="who">${opts}</select></div>
+  <div class="row" style="margin-top:14px"><button class="btn pri" onclick="doReassign(${ix})">Reassign</button><button class="btn" onclick="closeModal()">Cancel</button></div>`);
+}
+function doReassign(ix){
+ const t=S.tasks[ix], to=+document.getElementById('who').value;
+ pushLog(`Reassigned “${t.t}” from ${S.team[t.who].n} to ${S.team[to].n}`);
+ t.who=to;save();closeModal();render();
+}
+function openCover(){
+ const opts=S.team.map((x,i)=>`<option value="${i}">${x.n}</option>`).join('');
+ open(`<h3>Set out-of-office coverage</h3><p>Tasks and follow-ups stay visible in the CRM. This assigns a named covering producer and stamps every open item.</p>
+  <div class="fld"><label>Who is out</label><select id="out">${opts}</select></div>
+  <div class="fld"><label>Covered by</label><select id="cov">${opts}</select></div>
+  <div class="fld"><label>Days away</label><input id="days" type="number" value="3" min="1" max="30"></div>
+  <div class="row" style="margin-top:14px"><button class="btn pri" onclick="doCover()">Assign coverage</button><button class="btn" onclick="closeModal()">Cancel</button></div>`);
+}
+function doCover(){
+ const o=+document.getElementById('out').value, c=+document.getElementById('cov').value, d=+document.getElementById('days').value;
+ if(o===c){alert('Pick a different covering producer.');return}
+ S.cover.push({out:o,cover:c,days:d});
+ pushLog(`${S.team[o].n} out · ${S.team[c].n} covering ${S.tasks.filter(t=>!t.done&&t.who===o).length} open items`);
+ save();closeModal();render();
+}
+function endCover(out){S.cover=S.cover.filter(c=>c.out!==out);pushLog(`${S.team[out].n} back in office`);save();render()}
+function pushLog(msg){const d=new Date();S.log.unshift(`<b>${d.getHours()}:${String(d.getMinutes()).padStart(2,'0')}</b> · ${msg}`);S.log=S.log.slice(0,40)}
+function open(html){document.getElementById('mbox').innerHTML=html;document.getElementById('modal').classList.add('on')}
+function closeModal(){document.getElementById('modal').classList.remove('on')}
+document.getElementById('modal').addEventListener('click',e=>{if(e.target.id==='modal')closeModal()});
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
+ document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));t.classList.add('on');
+ ['overview','renewals','team','tasks'].forEach(v=>document.getElementById('v-'+v).classList.toggle('hide',v!==t.dataset.v));
+}));
+function render(){renderKpis();renderOverview();renderRenewals();renderTeam();renderTasks();save()}
+render();
+</script>
+</body>
+</html>
