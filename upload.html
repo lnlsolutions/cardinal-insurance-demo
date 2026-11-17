@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Data Intake Portal — Cardinal Insurance Group</title>
+<meta name="description" content="Pilot intake for Cardinal Insurance Group: sync contracts from your server or upload a file, map fields, validate, and import the book of business into the CRM.">
+<style>
+  :root{--blue:#046DCD;--navy:#1B3A6B;--red:#C33E47;--ink:#101B2D;--mut:#5A677A;--line:#DCE3EE;--bg:#F4F7FC;--ok:#0F7B4F;--warn:#A9660A}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.55}
+  a{color:var(--blue);text-decoration:none}
+  header{background:linear-gradient(135deg,#1B3A6B,#046DCD);color:#fff;padding:0}
+  .bar{max-width:1180px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;gap:14px}
+  .mark{width:40px;height:40px;border-radius:10px;background:#fff;color:var(--navy);display:grid;place-items:center;font-weight:800}
+  .bar h1{font-size:16px;margin:0;font-weight:700;letter-spacing:.2px}
+  .bar span{display:block;font-size:12px;opacity:.75;font-weight:400}
+  .bar nav{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+  .bar nav a{color:#fff;font-size:13px;opacity:.85;padding:7px 11px;border-radius:8px}
+  .bar nav a:hover,.bar nav a.on{background:rgba(255,255,255,.14);opacity:1}
+  .hero{max-width:1180px;margin:0 auto;padding:0 24px 26px;color:#fff}
+  .hero h2{font-size:26px;margin:14px 0 6px;letter-spacing:-.3px}
+  .hero p{margin:0;opacity:.85;font-size:14px;max-width:720px}
+  main{max-width:1180px;margin:0 auto;padding:24px}
+  .steps{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap}
+  .step{flex:1;min-width:210px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;gap:10px;align-items:flex-start}
+  .step b{width:24px;height:24px;border-radius:50%;background:#EAF1FB;color:var(--blue);display:grid;place-items:center;font-size:12px;flex:none}
+  .step.done b{background:#E6F5EE;color:var(--ok)}
+  .step h3{margin:0;font-size:13px}
+  .step p{margin:2px 0 0;font-size:12px;color:var(--mut)}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:16px}
+  .card h3{margin:0 0 4px;font-size:16px}
+  .card .sub{color:var(--mut);font-size:13px;margin-bottom:14px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:860px){.grid2{grid-template-columns:1fr}}
+  label{display:block;font-size:12px;font-weight:600;color:var(--mut);margin:10px 0 4px;text-transform:uppercase;letter-spacing:.06em}
+  input,select,textarea{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:9px;font:inherit;font-size:14px;background:#fff}
+  input:focus,select:focus,textarea:focus{outline:2px solid #BFD8F5;border-color:var(--blue)}
+  .btn{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:10px;padding:11px 16px;font:inherit;font-weight:600;font-size:14px;cursor:pointer;background:var(--blue);color:#fff}
+  .btn.ghost{background:#fff;color:var(--navy);border:1px solid var(--line)}
+  .btn.sm{padding:8px 12px;font-size:13px}
+  .btn:disabled{opacity:.5;cursor:not-allowed}
+  .drop{border:1.5px dashed #B9CBE4;border-radius:12px;padding:26px;text-align:center;background:#F8FBFF;cursor:pointer}
+  .drop.hot{border-color:var(--blue);background:#EFF6FF}
+  .drop b{display:block;font-size:14px;margin-bottom:4px}
+  .drop span{font-size:12.5px;color:var(--mut)}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);padding:8px;border-bottom:1px solid var(--line);white-space:nowrap}
+  td{padding:8px;border-bottom:1px solid #EEF2F8;vertical-align:top}
+  tr.bad td{background:#FDF3F4}
+  .pill{display:inline-block;font-size:11px;font-weight:700;padding:3px 8px;border-radius:20px;background:#EAF1FB;color:var(--blue)}
+  .pill.ok{background:#E6F5EE;color:var(--ok)}
+  .pill.err{background:#FBE9EB;color:var(--red)}
+  .pill.warn{background:#FDF1E0;color:var(--warn)}
+  .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .muted{color:var(--mut);font-size:12.5px}
+  .stat{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:12px 0}
+  .stat div{background:#F7FAFF;border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+  .stat b{display:block;font-size:19px}
+  .stat span{font-size:11.5px;color:var(--mut);text-transform:uppercase;letter-spacing:.05em}
+  .note{background:#F7FAFF;border-left:3px solid var(--blue);padding:10px 12px;border-radius:8px;font-size:12.8px;color:#33425A}
+  .hide{display:none}
+  .maptable select{padding:6px 8px;font-size:12.5px}
+  code{background:#EEF3FA;padding:1px 5px;border-radius:4px;font-size:12.5px}
+</style>
+</head>
+<body>
+<header>
+  <div class="bar">
+    <div class="mark">C</div>
+    <div><h1>Cardinal Insurance Group<span>Data intake portal · pilot workspace</span></h1></div>
+    <nav>
+      <a href="upload.html" class="on">Intake</a>
+      <a href="quote.html">Quoting</a>
+      <a href="admin.html">CRM</a>
+      <a href="portal.html">Client portal</a>
+    </nav>
+  </div>
+  <div class="hero">
+    <h2>Bring the book of business in, cleanly.</h2>
+    <p>Pull contracts from your agency management system or upload a file, map the columns once, validate every row, and import into the CRM. Quotes and client records read from the same store, so what you import here is what clients see in their portal.</p>
+  </div>
+</header>
+
+<main>
+  <div class="steps">
+    <div class="step" id="s1"><b>1</b><div><h3>Choose a source</h3><p>Direct sync or a file export.</p></div></div>
+    <div class="step" id="s2"><b>2</b><div><h3>Map the fields</h3><p>Match their columns to ours once.</p></div></div>
+    <div class="step" id="s3"><b>3</b><div><h3>Validate &amp; import</h3><p>Review rejects, then commit.</p></div></div>
+  </div>
+
+  <div class="card">
+    <h3>1. Source</h3>
+    <div class="sub">A sync needs the endpoint, credentials and a read-only export view on your side. Until that is provisioned, the file path works for a pilot today.</div>
+    <div class="grid2">
+      <div>
+        <label>Server sync (read-only)</label>
+        <input id="endpoint" placeholder="https://ams.cardinalinsurancegrp.com/api/v1/policies">
+        <label>API key or token</label>
+        <input id="apikey" type="password" placeholder="Paste a scoped read-only key">
+        <div class="row" style="margin-top:12px">
+          <button class="btn ghost sm" onclick="testSync()">Test connection</button>
+          <span class="muted" id="synctest">Not tested</span>
+        </div>
+        <div class="note" style="margin-top:12px">The pilot store runs in this browser. A production sync writes to LNL's database with an encrypted key held server side, never in the page.</div>
+      </div>
+      <div>
+        <label>Or upload an export</label>
+        <div class="drop" id="drop" onclick="document.getElementById('file').click()">
+          <b>Drop a CSV or JSON file here</b>
+          <span>Accepts the standard policy export: number, insured, carrier, line, effective, expiration, premium, commission.</span>
+        </div>
+        <input type="file" id="file" accept=".csv,.json,.txt" class="hide" onchange="handleFile(this.files[0])">
+        <div class="row" style="margin-top:12px">
+          <button class="btn ghost sm" onclick="downloadSample()">Download sample CSV</button>
+          <button class="btn sm" onclick="loadDemo()">Load demo book</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card hide" id="mapCard">
+    <h3>2. Map the fields</h3>
+    <div class="sub">We auto-detect what we can. Anything left as Ignore is dropped. Policy number and insured name are required.</div>
+    <div style="overflow-x:auto"><table class="maptable" id="mapTable"></table></div>
+    <div class="row" style="margin-top:14px">
+      <button class="btn" onclick="runValidation()">Validate rows</button>
+      <span class="muted" id="rowCount"></span>
+    </div>
+  </div>
+
+  <div class="card hide" id="valCard">
+    <h3>3. Validate &amp; import</h3>
+    <div class="stat" id="valStats"></div>
+    <div id="valNote"></div>
+    <div style="overflow-x:auto;max-height:340px;margin-top:12px"><table id="valTable"></table></div>
+    <div class="row" style="margin-top:14px">
+      <button class="btn" id="importBtn" onclick="commitImport()">Import clean rows</button>
+      <button class="btn ghost" onclick="resetAll()">Start over</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Imported book</h3>
+    <div class="sub" id="bookSub">Nothing imported yet.</div>
+    <div class="stat" id="bookStats"></div>
+    <div style="overflow-x:auto;max-height:300px"><table id="bookTable"></table></div>
+    <div class="row" style="margin-top:12px">
+      <button class="btn ghost sm" onclick="exportJson()">Export JSON</button>
+      <button class="btn ghost sm" onclick="clearBook()">Clear imported book</button>
+    </div>
+  </div>
+</main>
+
+<script>
+const FIELDS=[
+ {k:'policy_number',label:'Policy number',req:true,aliases:['policy','policy number','pol num','policy_no','number']},
+ {k:'insured_name',label:'Insured name',req:true,aliases:['insured','name','client','client name','named insured','account']},
+ {k:'email',label:'Email',aliases:['email','e-mail','email address']},
+ {k:'phone',label:'Phone',aliases:['phone','mobile','cell','telephone']},
+ {k:'carrier',label:'Carrier',aliases:['carrier','company','insurance company','market']},
+ {k:'line',label:'Line of business',aliases:['line','product','policy type','lob','type']},
+ {k:'effective',label:'Effective date',aliases:['effective','effective date','inception','start']},
+ {k:'expiration',label:'Expiration date',aliases:['expiration','expiry','expiration date','renewal','end']},
+ {k:'premium',label:'Premium',aliases:['premium','annual premium','prem','policy premium']},
+ {k:'commission',label:'Commission %',aliases:['commission','comm','commission rate','comm %']},
+ {k:'status',label:'Status',aliases:['status','policy status','state']},
+ {k:'address',label:'Address',aliases:['address','street','property address','location']},
+ {k:'zip',label:'ZIP',aliases:['zip','zip code','postal','postal code']}
+];
+const KEY='card_contracts';
+let raw=[], headers=[], mapping={};
+
+function el(id){return document.getElementById(id)}
+function money(n){return '$'+(Number(n)||0).toLocaleString(undefined,{minimumFractionDigits:0,maximumFractionDigits:0})}
+
+function parseCSV(text){
+  const rows=[]; let row=[], cur='', q=false;
+  for(let i=0;i<text.length;i++){
+    const ch=text[i];
+    if(q){ if(ch==='"'){ if(text[i+1]==='"'){cur+='"';i++} else q=false } else cur+=ch }
+    else if(ch==='"') q=true;
+    else if(ch===','){ row.push(cur); cur='' }
+    else if(ch==='\n'){ row.push(cur); rows.push(row); row=[]; cur='' }
+    else if(ch!=='\r') cur+=ch;
+  }
+  if(cur||row.length){row.push(cur);rows.push(row)}
+  return rows.filter(r=>r.some(c=>String(c).trim()!==''));
+}
+
+function handleFile(f){
+  if(!f) return;
+  const r=new FileReader();
+  r.onload=()=>{
+    const t=String(r.result);
+    if(f.name.toLowerCase().endsWith('.json')){
+      try{const j=JSON.parse(t); raw=Array.isArray(j)?j:(j.policies||j.data||j.records||[]); headers=Object.keys(raw[0]||{})}
+      catch(e){alert('That JSON did not parse. Expected an array of policy objects.');return}
+    }else{
+      const rows=parseCSV(t); headers=rows[0].map(h=>String(h).trim()); raw=rows.slice(1).map(r=>Object.fromEntries(headers.map((h,i)=>[h,(r[i]||'').trim()])));
+    }
+    buildMapping();
+  };
+  r.readAsText(f);
+}
+
+function loadDemo(){
+  headers=['Policy Number','Named Insured','Email','Phone','Carrier','Line','Effective Date','Expiration Date','Annual Premium','Comm %','Status','Property Address','ZIP'];
+  raw=[
+   ['CIG-4471-01','Gilbert Family Trust','r.gilbert@example.com','480-555-0142','Travelers','Homeowners HO-3','2026-03-01','2027-03-01','2840','15','Active','1420 E Palo Verde St, Gilbert','85234'],
+   ['CIG-4471-02','Gilbert Family Trust','r.gilbert@example.com','480-555-0142','Progressive','Personal Auto','2026-05-12','2027-05-12','1960','12','Active','1420 E Palo Verde St, Gilbert','85234'],
+   ['CIG-5188-01','Mesa Dental Partners LLC','office@mesadental.example','480-555-0199','The Hartford','Commercial BOP','2026-01-15','2027-01-15','6420','14','Active','88 W Main St, Mesa','85201'],
+   ['CIG-5290-01','Alvarez, Denise','dalvarez@example.com','602-555-0117','Safeco','Renters HO-4','2026-06-01','2027-06-01','420','15','Active','301 N Central Ave, Phoenix','85004'],
+   ['CIG-5310-01','Kaur, Amrit','aka2026@example.com','480-555-0176','Nationwide','Homeowners HO-5','2026-02-20','2027-02-20','4120','15','Active','9402 E Shea Blvd, Scottsdale','85260'],
+   ['CIG-5344-01','Sun Valley Remodeling','ap@sunvalleyremodel.example','480-555-0155','Employers','Workers Comp','2026-04-01','2027-04-01','9870','10','Active','2110 W Guadalupe Rd, Gilbert','85233'],
+   ['CIG-5402-01','Whitfield, Marcus','mwhitfield@example.com','623-555-0134','MetLife','Term Life 20yr','2026-07-01','2046-07-01','1180','20','Active','7734 W Thunderbird Rd, Peoria','85381'],
+   ['','Nguyen, Thao','tnguyen@example.com','602-555-0188','Kemper','Personal Auto','2026-08-01','2027-08-01','$1,540.00','12','Active','','85032'],
+   ['CIG-5501-01','Chandler Floral Co','hello@chandlerfloral.example','480-555-0121','Travelers','Commercial Package','2025-11-01','2026-11-01','5310','14','Expiring','120 S Arizona Ave, Chandler','85225'],
+   ['CIG-5599-01','Bennett, Carla','cbennett@example.com','480-555-0163','','Homeowners HO-3','2026-09-10','2027-09-10','2260','15','Active','','85251']
+  ].map(r=>Object.fromEntries(headers.map((h,i)=>[h,r[i]])));
+  buildMapping();
+}
+
+function autoGuess(h){
+  const norm=h.toLowerCase().replace(/[^a-z0-9% ]/g,' ').replace(/\s+/g,' ').trim();
+  for(const f of FIELDS){ if(f.aliases.includes(norm)) return f.k }
+  for(const f of FIELDS){ if(f.aliases.some(a=>norm.includes(a))) return f.k }
+  return 'ignore';
+}
+
+function buildMapping(){
+  el('mapCard').classList.remove('hide');
+  el('s1').classList.add('done');
+  mapping={};
+  el('mapTable').innerHTML='<tr><th>Their column</th><th>Sample value</th><th>Maps to</th></tr>'+
+    headers.map((h,i)=>{
+      const g=autoGuess(h); mapping[h]=g;
+      const sample=String((raw[0]||{})[h]||'').slice(0,42);
+      return `<tr><td><b>${h}</b></td><td class="muted">${sample}</td>
+        <td><select onchange="mapping[this.dataset.h]=this.value" data-h="${h}">
+          <option value="ignore"${g==='ignore'?' selected':''}>— Ignore —</option>
+          ${FIELDS.map(f=>`<option value="${f.k}"${g===f.k?' selected':''}>${f.label}${f.req?' *':''}</option>`).join('')}
+        </select></td></tr>`;
+    }).join('');
+  el('rowCount').textContent=raw.length+' rows ready to validate';
+  el('s2').classList.add('done');
+  el('valCard').classList.add('hide');
+}
+
+function cleanDate(v){
+  if(!v) return '';
+  const s=String(v).trim();
+  const m=s.match(/^(\d{4})-(\d{2})-(\d{2})$/); if(m) return s;
+  const us=s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  if(us) return `${us[3]}-${us[1].padStart(2,'0')}-${us[2].padStart(2,'0')}`;
+  const d=new Date(s); if(!isNaN(d)) return d.toISOString().slice(0,10);
+  return '';
+}
+function cleanMoney(v){ return String(v||'').replace(/[$,\s]/g,'') }
+
+let validated=[];
+function runValidation(){
+  const inv={}; Object.entries(mapping).forEach(([h,k])=>{ if(k!=='ignore') inv[k]=h });
+  if(!inv.policy_number||!inv.insured_name){ alert('Map both Policy number and Insured name before validating.'); return }
+  const seen=new Set();
+  validated=raw.map((r,i)=>{
+    const o={_row:i+2,_errors:[]};
+    Object.entries(inv).forEach(([k,h])=>{ o[k]=String(r[h]||'').trim() });
+    o.premium=Number(cleanMoney(o.premium))||0;
+    o.commission=Number(cleanMoney(o.commission))||0;
+    o.effective=cleanDate(o.effective); o.expiration=cleanDate(o.expiration);
+    if(!o.policy_number) o._errors.push('Missing policy number');
+    if(!o.insured_name) o._errors.push('Missing insured name');
+    if(o.effective && o.expiration && o.expiration<o.effective) o._errors.push('Expiration before effective');
+    if(!o.premium) o._errors.push('Premium blank or unreadable');
+    if(o.policy_number){ if(seen.has(o.policy_number)) o._errors.push('Duplicate in file'); seen.add(o.policy_number) }
+    return o;
+  });
+  const existing=(JSON.parse(localStorage.getItem(KEY)||'[]')).map(p=>p.policy_number);
+  validated.forEach(o=>{ if(o.policy_number && existing.includes(o.policy_number)) o._errors.push('Already in CRM') });
+
+  const bad=validated.filter(o=>o._errors.length), good=validated.filter(o=>!o._errors.length);
+  const prem=good.reduce((s,o)=>s+o.premium,0);
+  el('valCard').classList.remove('hide'); el('s3').classList.add('done');
+  el('valStats').innerHTML=`
+    <div><b>${validated.length}</b><span>Rows read</span></div>
+    <div><b style="color:var(--ok)">${good.length}</b><span>Clean</span></div>
+    <div><b style="color:var(--red)">${bad.length}</b><span>Need a fix</span></div>
+    <div><b>${money(prem)}</b><span>Premium ready</span></div>`;
+  el('valNote').innerHTML= bad.length
+    ? `<div class="note">${bad.length} row${bad.length>1?'s':''} will be skipped until fixed. Common causes: a blank policy number, a premium written as text, or a duplicate already in the CRM.</div>`
+    : `<div class="note">All rows check out. Import to write them into the CRM store.</div>`;
+  el('valTable').innerHTML='<tr><th>Row</th><th>Policy</th><th>Insured</th><th>Carrier</th><th>Line</th><th>Premium</th><th>Status</th></tr>'+
+    validated.map(o=>`<tr class="${o._errors.length?'bad':''}">
+      <td>${o._row}</td><td>${o.policy_number||'—'}</td><td>${o.insured_name||'—'}</td><td>${o.carrier||'—'}</td>
+      <td>${o.line||'—'}</td><td>${o.premium?money(o.premium):'—'}</td>
+      <td>${o._errors.length?`<span class="pill err">${o._errors[0]}</span>`:'<span class="pill ok">Ready</span>'}</td></tr>`).join('');
+  el('importBtn').disabled = good.length===0;
+}
+
+function commitImport(){
+  const good=validated.filter(o=>!o._errors.length).map(o=>{
+    const {_row,_errors,...rest}=o;
+    return {...rest,_source:'intake',_imported:new Date().toISOString().slice(0,10)};
+  });
+  const book=JSON.parse(localStorage.getItem(KEY)||'[]').concat(good);
+  localStorage.setItem(KEY,JSON.stringify(book));
+  renderBook();
+  alert(good.length+' contract'+(good.length>1?'s':'')+' imported. They now appear in the CRM and client portal.');
+}
+
+function renderBook(){
+  const book=JSON.parse(localStorage.getItem(KEY)||'[]');
+  const prem=book.reduce((s,p)=>s+(Number(p.premium)||0),0);
+  const comm=book.reduce((s,p)=>s+(Number(p.premium)||0)*(Number(p.commission)||0)/100,0);
+  const clients=new Set(book.map(p=>(p.email||p.insured_name||'').toLowerCase())).size;
+  const carriers=new Set(book.map(p=>p.carrier).filter(Boolean)).size;
+  el('bookStats').innerHTML=`
+    <div><b>${book.length}</b><span>Contracts</span></div>
+    <div><b>${clients}</b><span>Clients</span></div>
+    <div><b>${money(prem)}</b><span>Annual premium</span></div>
+    <div><b>${money(comm)}</b><span>Commission</span></div>`;
+  el('bookSub').textContent = book.length
+    ? `${book.length} contracts across ${carriers} carriers. Written to the CRM store.`
+    : 'Nothing imported yet.';
+  el('bookTable').innerHTML = book.length? '<tr><th>Policy</th><th>Insured</th><th>Carrier</th><th>Line</th><th>Effective</th><th>Premium</th><th>Comm</th></tr>'+
+    book.map(p=>`<tr><td>${p.policy_number||'—'}</td><td>${p.insured_name||'—'}</td><td>${p.carrier||'—'}</td><td>${p.line||'—'}</td><td>${p.effective||'—'}</td><td>${money(p.premium)}</td><td>${p.commission||0}%</td></tr>`).join('')
+    : '<tr><td class="muted">No rows yet.</td></tr>';
+}
+
+function testSync(){
+  const e=el('endpoint').value.trim(), k=el('apikey').value.trim();
+  const out=el('synctest');
+  if(!e||!k){ out.textContent='Add an endpoint and a key'; out.style.color='var(--warn)'; return }
+  if(!/^https:\/\//.test(e)){ out.textContent='Endpoint must be https'; out.style.color='var(--red)'; return }
+  out.textContent='Testing…'; out.style.color='var(--mut)';
+  setTimeout(()=>{ out.textContent='Ready to authenticate once the export view exists on your side'; out.style.color='var(--ok)' },700);
+}
+
+function downloadSample(){
+  const rows=[['Policy Number','Named Insured','Email','Phone','Carrier','Line','Effective Date','Expiration Date','Annual Premium','Comm %','Status','Property Address','ZIP'],
+  ['CIG-4471-01','Gilbert Family Trust','r.gilbert@example.com','480-555-0142','Travelers','Homeowners HO-3','2026-03-01','2027-03-01','2840','15','Active','1420 E Palo Verde St, Gilbert','85234'],
+  ['CIG-5188-01','Mesa Dental Partners LLC','office@mesadental.example','480-555-0199','The Hartford','Commercial BOP','2026-01-15','2027-01-15','6420','14','Active','88 W Main St, Mesa','85201']];
+  const csv=rows.map(r=>r.map(c=>/[",]/.test(c)?`"${c.replace(/"/g,'""')}"`:c).join(',')).join('\n');
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
+  a.download='cardinal-policy-export-sample.csv'; a.click();
+}
+
+function exportJson(){
+  const book=JSON.parse(localStorage.getItem(KEY)||'[]');
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([JSON.stringify(book,null,2)],{type:'application/json'}));
+  a.download='cardinal-book-of-business.json'; a.click();
+}
+function clearBook(){ if(confirm('Clear the imported book from this browser?')){ localStorage.removeItem(KEY); renderBook() } }
+function resetAll(){ raw=[];headers=[];el('mapCard').classList.add('hide');el('valCard').classList.add('hide');renderBook() }
+
+// drag and drop
+['dragover','dragenter'].forEach(ev=>el('drop').addEventListener(ev,e=>{e.preventDefault();el('drop').classList.add('hot')}));
+['dragleave','drop'].forEach(ev=>el('drop').addEventListener(ev,e=>{e.preventDefault();el('drop').classList.remove('hot')}));
+el('drop').addEventListener('drop',e=>{ const f=e.dataTransfer.files[0]; if(f) handleFile(f) });
+
+renderBook();
+</script>
+</body>
+</html>
