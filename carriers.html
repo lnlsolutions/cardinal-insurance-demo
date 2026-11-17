@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Carrier Connections — Cardinal Insurance Group</title>
+<style>
+:root{--blue:#046DCD;--navy:#1B3A6B;--red:#C33E47;--gold:#C8912A;--ink:#152033;--mute:#5B7089;--line:#DCE4F0;--bg:#F5F8FD;--card:#fff}
+*{box-sizing:border-box}
+body{margin:0;font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;color:var(--ink);background:var(--bg)}
+a{color:var(--blue);text-decoration:none}
+.top{background:var(--navy);color:#fff;padding:0 22px;display:flex;align-items:center;gap:18px;height:58px;position:sticky;top:0;z-index:20}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.01em}
+.mark{width:28px;height:28px;border-radius:7px;background:linear-gradient(135deg,var(--red),#E4707A);display:grid;place-items:center;font-size:12px;font-weight:800}
+.top nav{display:flex;gap:16px;margin-left:8px;font-size:13px}
+.top nav a{color:#C9D8EE;padding:6px 0;border-bottom:2px solid transparent}
+.top nav a.on,.top nav a:hover{color:#fff;border-color:var(--gold)}
+.wrap{max-width:1220px;margin:0 auto;padding:22px}
+h1{font-size:23px;margin:0 0 4px}
+.sub{color:var(--mute);font-size:13.5px;margin-bottom:16px}
+.grid{display:grid;gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
+.card h2{font-size:14px;margin:0 0 3px;letter-spacing:.02em}
+.card .hint{color:var(--mute);font-size:12.5px;margin-bottom:12px}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border-radius:999px;font-size:11.5px;font-weight:700;letter-spacing:.02em}
+.b-api{background:#E8F3FF;color:#0B62B5}.b-rater{background:#EAF7EE;color:#1E7A44}.b-portal{background:#FDF1E4;color:#9A5A12}
+.on-dot{background:#E9F8EF;color:#1E7A44}.off-dot{background:#F0F2F6;color:#6B7A90}.warn-dot{background:#FDECEC;color:#A62B33}
+.btn{border:0;border-radius:9px;padding:9px 14px;font:inherit;font-weight:700;font-size:13px;cursor:pointer;background:var(--blue);color:#fff}
+.btn.sm{padding:6px 11px;font-size:12.5px}
+.btn.ghost{background:#fff;color:var(--navy);border:1px solid var(--line)}
+.btn.gold{background:var(--gold)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--mute);padding:0 8px 8px;font-weight:800}
+td{padding:9px 8px;border-top:1px solid var(--line);vertical-align:middle}
+tbody tr:hover{background:#FAFCFF}
+.carrier-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(268px,1fr));gap:11px}
+.cc{background:#fff;border:1px solid var(--line);border-radius:11px;padding:13px}
+.cc.on{border-color:#BCD9F7;box-shadow:0 2px 10px rgba(4,109,205,.07)}
+.cc .row1{display:flex;align-items:center;gap:9px;margin-bottom:8px}
+.av{width:32px;height:32px;border-radius:8px;background:#EEF4FC;color:var(--navy);display:grid;place-items:center;font-weight:800;font-size:12px}
+.cc b{font-size:13.5px}
+.cc .meta{color:var(--mute);font-size:12px;line-height:1.45}
+.cc .acts{display:flex;gap:7px;margin-top:10px}
+.mask{background:#F6F8FC;border:1px solid var(--line);border-radius:8px;padding:9px 11px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;color:#31445C;margin:8px 0}
+.modal{position:fixed;inset:0;background:rgba(12,25,44,.55);display:none;place-items:center;z-index:60;padding:18px}
+.modal.on{display:grid}
+.sheet{background:#fff;border-radius:14px;max-width:620px;width:100%;max-height:88vh;overflow:auto;padding:20px}
+.sheet h3{margin:0 0 3px;font-size:17px}
+label{display:block;font-size:12px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;color:var(--mute);margin:12px 0 4px}
+input,select{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:8px;font:inherit;font-size:13.5px;background:#fff}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.diff{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.pane{background:#F8FAFD;border:1px solid var(--line);border-radius:10px;padding:11px}
+.pane .t{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--mute);font-weight:800;margin-bottom:7px}
+.kv{font-family:ui-monospace,Menlo,monospace;font-size:12px;display:flex;justify-content:space-between;gap:8px;padding:3px 0;border-bottom:1px dashed #E3EAF4}
+.kv:last-child{border:0}
+.kv span:first-child{color:#6B7A90}
+.log{font-size:12.5px;color:#3B4E68}
+.log div{padding:6px 0;border-bottom:1px solid #EEF2F8}
+.note{background:#FFFDF7;border:1px solid #F0E3C4;border-radius:10px;padding:12px 14px;font-size:12.8px;color:#6A5526}
+.pill{display:inline-block;padding:2px 8px;border-radius:999px;background:#EEF4FC;color:#1B3A6B;font-size:11.5px;font-weight:700}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="brand"><div class="mark">C</div>Cardinal Insurance Group</div>
+  <nav>
+    <a href="admin.html">Admin</a>
+    <a class="on" href="carriers.html">Carrier connections</a>
+    <a href="upload.html">Data intake</a>
+    <a href="quote.html">Quote engine</a>
+    <a href="portal.html">Client portal</a>
+  </nav>
+</div>
+<div class="wrap">
+  <h1>Carrier connections</h1>
+  <div class="sub">One login per carrier, one structure for every policy. Connect a market once, then pull any client's policy from the carrier that writes it.</div>
+
+  <div class="grid" style="grid-template-columns:1.55fr 1fr;align-items:start">
+    <div class="grid">
+      <div class="card">
+        <h2>Markets</h2>
+        <div class="hint">Connect with agency credentials. Credentials are held in an encrypted vault and never displayed after saving.</div>
+        <div class="carrier-list" id="clist"></div>
+      </div>
+
+      <div class="card">
+        <h2>Clients by carrier</h2>
+        <div class="hint">Every policy in the book, grouped by the market that writes it. Pull refreshes that client's policy from the carrier record.</div>
+        <div style="display:flex;gap:9px;margin:0 0 10px;flex-wrap:wrap">
+          <select id="cfilter" style="max-width:240px" onchange="renderClients()"><option value="">All carriers</option></select>
+          <button class="btn ghost sm" onclick="syncAll()">Sync all connected</button>
+        </div>
+        <table>
+          <thead><tr><th>Client</th><th>Policy</th><th>Carrier</th><th>Premium</th><th>Renewal</th><th>Last pull</th><th></th></tr></thead>
+          <tbody id="crows"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h2>How the pull works</h2>
+        <div class="hint">Three connection types, same normalized output.</div>
+        <div style="font-size:13px;line-height:1.62">
+          <p style="margin:0 0 10px"><span class="badge b-api">API</span> &nbsp;Carrier-issued API credentials. Real time, no markup, includes documents.</p>
+          <p style="margin:0 0 10px"><span class="badge b-rater">Rater</span> &nbsp;Comparative rater or agency management bridge. Rates and policy data in one call.</p>
+          <p style="margin:0"><span class="badge b-portal">Portal</span> &nbsp;Carrier portal session with stored agency login and MFA handshake. Slower, still normalized.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>One structure, any carrier</h2>
+        <div class="hint">Carrier field names on the left of the arrow, our schema on the right.</div>
+        <table>
+          <thead><tr><th>Our field</th><th>Carrier labels</th></tr></thead>
+          <tbody id="maptbl"></tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <h2>Pull log</h2>
+        <div class="log" id="log"><div style="color:#8A99AD">No pulls yet this session.</div></div>
+      </div>
+
+      <div class="note">Carrier consent matters. Automated pulls need written carrier approval or an approved rater and agency management bridge. Credentials alone are not permission.</div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="connectModal"><div class="sheet" id="connectSheet"></div></div>
+<div class="modal" id="pullModal"><div class="sheet" id="pullSheet"></div></div>
+<script>
+const CKEY='card_carriers', LKEY='card_contracts';
+const CARRIERS=[
+ {id:'travelers',n:'Travelers',t:'API',lines:'Home · Auto · BOP',fields:{policy_number:'PolNbr',insured_name:'NamedInsured',effective:'EffDt',expiration:'ExpDt',premium:'AnnPrem'}},
+ {id:'progressive',n:'Progressive',t:'API',lines:'Auto · Home · Commercial',fields:{policy_number:'policy_number',insured_name:'insured_name',effective:'effective_date',expiration:'expiration_date',premium:'total_premium'}},
+ {id:'safeco',n:'Safeco',t:'API',lines:'Home · Auto · Umbrella',fields:{policy_number:'PolicyNo',insured_name:'InsuredName',effective:'EffectiveDate',expiration:'ExpirationDate',premium:'TotalPremium'}},
+ {id:'nationwide',n:'Nationwide',t:'API',lines:'Home · Auto · Life',fields:{policy_number:'PolicyNumber',insured_name:'Insured_Name',effective:'Policy_Effective',expiration:'Policy_Expiration',premium:'Policy_Premium'}},
+ {id:'hartford',n:'The Hartford',t:'Rater',lines:'BOP · Workers comp',fields:{policy_number:'POLICY',insured_name:'ACCOUNT_NAME',effective:'EFF_DATE',expiration:'EXP_DATE',premium:'GROSS_PREM'}},
+ {id:'foremost',n:'Foremost',t:'Portal',lines:'Dwelling fire · Mobile home',fields:{policy_number:'Policy',insured_name:'Insured',effective:'Start',expiration:'End',premium:'Premium'}},
+ {id:'mercury',n:'Mercury',t:'Portal',lines:'Auto · Home',fields:{policy_number:'POLICYID',insured_name:'INSURED',effective:'EFF',expiration:'EXP',premium:'PREM'}},
+ {id:'bristolwest',n:'Bristol West',t:'Portal',lines:'Non-standard auto',fields:{policy_number:'POL_NUM',insured_name:'CLIENT_NAME',effective:'INCEPTION',expiration:'RENEWAL',premium:'TOTAL_PREM'}},
+ {id:'gainsco',n:'GAINSCO',t:'Portal',lines:'Non-standard auto',fields:{policy_number:'Policy No.',insured_name:'Customer',effective:'Policy Start',expiration:'Policy End',premium:'Amount Due'}},
+ {id:'stillwater',n:'Stillwater',t:'API',lines:'Home · Dwelling fire',fields:{policy_number:'policyId',insured_name:'insuredFullName',effective:'inceptionDate',expiration:'expirationDate',premium:'annualPremium'}},
+ {id:'openly',n:'Openly',t:'API',lines:'High-value home',fields:{policy_number:'policyNumber',insured_name:'namedInsured',effective:'effectiveDate',expiration:'expirationDate',premium:'totalPremium'}},
+ {id:'chubb',n:'Chubb',t:'API',lines:'High-net-worth home & auto',fields:{policy_number:'PolicyNum',insured_name:'InsuredName',effective:'InceptionDt',expiration:'ExpirationDt',premium:'AnnualPremium'}}
+];
+const CANON=[
+ ['policy_number','Policy number'],['insured_name','Insured name'],['effective','Effective date'],
+ ['expiration','Expiration date'],['premium','Annual premium'],['line','Line of business'],
+ ['status','Policy status'],['address','Risk address']
+];
+const MAPINFO={
+ policy_number:['PolNbr','policy_number','PolicyNo','POLICYID','policyId'],
+ insured_name:['NamedInsured','insured_name','InsuredName','INSURED','insuredFullName'],
+ effective:['EffDt','effective_date','EffectiveDate','EFF','inceptionDate'],
+ expiration:['ExpDt','expiration_date','ExpirationDate','EXP','expirationDate'],
+ premium:['AnnPrem','total_premium','TotalPremium','PREM','annualPremium'],
+ line:['ProductCd','line_of_business','LineOfBusiness','PRODTYPE','lob'],
+ status:['PolStatus','policy_status','Status','POL_STATUS','status'],
+ address:['RiskAddr1','risk_address','LocationAddress','LOC_ADDR','riskAddress']
+};
+function ls(){try{return JSON.parse(localStorage.getItem(CKEY)||'{}')}catch(e){return{}}}
+function sv(o){localStorage.setItem(CKEY,JSON.stringify(o))}
+function contracts(){try{const c=JSON.parse(localStorage.getItem(LKEY)||'[]');return c.length?c:DEMO}catch(e){return DEMO}}
+const DEMO=[
+ {policy_number:'HO-4471902',insured_name:'Jill Navarro',email:'jill.n@example.com',carrier:'Safeco',line:'Homeowners',premium:2140,expiration:'2027-04-01',status:'Active'},
+ {policy_number:'AU-8821045',insured_name:'Jill Navarro',email:'jill.n@example.com',carrier:'Progressive',line:'Personal auto',premium:1680,expiration:'2027-02-14',status:'Active'},
+ {policy_number:'DP-3310992',insured_name:'Robert Gilbert',email:'r.gilbert@example.com',carrier:'Foremost',line:'Dwelling fire',premium:1180,expiration:'2027-01-08',status:'Active'},
+ {policy_number:'BP-7712400',insured_name:'Harbor Dental LLC',email:'billing@harbordental.example',carrier:'The Hartford',line:'BOP',premium:3420,expiration:'2027-06-30',status:'Active'},
+ {policy_number:'AU-5510233',insured_name:'Luis Ortega',email:'l.ortega@example.com',carrier:'Mercury',line:'Personal auto',premium:2260,expiration:'2027-03-19',status:'Pending renewal'},
+ {policy_number:'HO-9930114',insured_name:'Dana Whitfield',email:'d.whitfield@example.com',carrier:'Travelers',line:'Homeowners',premium:2890,expiration:'2027-05-22',status:'Active'},
+ {policy_number:'AU-2204477',insured_name:'Marcus Webb',email:'m.webb@example.com',carrier:'Bristol West',line:'Non-standard auto',premium:3120,expiration:'2026-12-11',status:'Active'},
+ {policy_number:'HO-6618220',insured_name:'Priya Raman',email:'p.raman@example.com',carrier:'Openly',line:'High-value home',premium:5240,expiration:'2027-08-03',status:'Active'}
+];
+function money(n){return '$'+(Number(n)||0).toLocaleString(undefined,{maximumFractionDigits:0})}
+function today(){return new Date().toISOString().slice(0,10)}
+
+function renderCarriers(){
+  const conn=ls();
+  document.getElementById('clist').innerHTML=CARRIERS.map(c=>{
+    const on=!!conn[c.id];
+    const cls=c.t==='API'?'b-api':c.t==='Rater'?'b-rater':'b-portal';
+    return `<div class="cc ${on?'on':''}">
+      <div class="row1"><div class="av">${c.n.slice(0,2).toUpperCase()}</div>
+        <div style="flex:1"><b>${c.n}</b><div class="meta">${c.lines}</div></div>
+        <span class="badge ${cls}">${c.t}</span></div>
+      <div class="meta">${on?'Connected · '+conn[c.id].user+' · last pull '+(conn[c.id].last||'—'):'Not connected'}</div>
+      <div class="acts">
+        <button class="btn sm ${on?'ghost':''}" onclick="openConnect('${c.id}')">${on?'Update login':'Connect'}</button>
+        ${on?`<button class="btn sm ghost" onclick="disconnect('${c.id}')">Disconnect</button>`:''}
+      </div></div>`;
+  }).join('');
+  const f=document.getElementById('cfilter');
+  if(f.options.length<=1){
+    const names=[...new Set(contracts().map(c=>c.carrier))].sort();
+    f.innerHTML='<option value="">All carriers</option>'+names.map(n=>`<option>${n}</option>`).join('');
+  }
+}
+function renderMap(){
+  document.getElementById('maptbl').innerHTML=CANON.map(([k,label])=>
+    `<tr><td><b>${label}</b><div class="meta" style="color:#7A8CA3;font-size:11.5px;font-family:ui-monospace,Menlo,monospace">${k}</div></td>
+     <td style="font-family:ui-monospace,Menlo,monospace;font-size:11.5px;color:#41546D">${(MAPINFO[k]||[]).join(' · ')}</td></tr>`).join('');
+}
+function renderClients(){
+  const conn=ls(); const f=document.getElementById('cfilter').value;
+  const rows=contracts().filter(c=>!f||c.carrier===f);
+  document.getElementById('crows').innerHTML=rows.map(c=>{
+    const cid=(c.carrier||'').toLowerCase().replace(/[^a-z]/g,'');
+    const isOn=!!conn[cid]||!!conn[CARRIERS.find(x=>x.n===c.carrier)?.id];
+    return `<tr>
+      <td><b>${c.insured_name||'—'}</b><div style="color:#7A8CA3;font-size:11.5px">${c.line||''}</div></td>
+      <td style="font-family:ui-monospace,Menlo,monospace;font-size:12px">${c.policy_number||'—'}</td>
+      <td>${c.carrier||'—'}</td>
+      <td>${money(c.premium)}</td>
+      <td>${c.expiration||'—'}</td>
+      <td>${c.last_pull||'never'}</td>
+      <td style="text-align:right">${isOn
+        ? `<button class="btn sm" onclick="openPull('${c.policy_number}')">Pull</button>`
+        : `<button class="btn sm ghost" onclick="openConnect('${CARRIERS.find(x=>x.n===c.carrier)?.id||''}')">Connect</button>`}</td>
+    </tr>`;
+  }).join('')||'<tr><td colspan="7" style="color:#8A99AD">No policies for that carrier.</td></tr>';
+}
+function openConnect(id){
+  const c=CARRIERS.find(x=>x.id===id); if(!c)return;
+  const conn=ls()[id]||{};
+  document.getElementById('connectSheet').innerHTML=`
+    <h3>${c.n}</h3>
+    <div class="sub" style="margin-bottom:6px">${c.t} connection · ${c.lines}</div>
+    <label>Agency code or producer number</label><input id="cw" placeholder="e.g. 0028431" value="${conn.agency||''}">
+    <div class="two">
+      <div><label>Username</label><input id="cu" placeholder="portal user" value="${conn.userMasked?'':''}"></div>
+      <div><label>MFA method</label><select id="cm"><option>Authenticator app</option><option>SMS code</option><option>Email code</option></select></div>
+    </div>
+    <label>Password</label><input id="cp" type="password" placeholder="${conn.user?'Saved in vault — enter to replace':'Enter carrier password'}">
+    <div class="mask">${conn.user?'Stored: '+conn.user+' · credential sealed in vault, never shown again':'Nothing stored yet'}</div>
+    <div style="display:flex;gap:9px;justify-content:flex-end;margin-top:14px">
+      <button class="btn ghost" onclick="close_('connectModal')">Cancel</button>
+      <button class="btn" onclick="saveConn('${id}')">${conn.user?'Update login':'Connect market'}</button>
+    </div>`;
+  document.getElementById('connectModal').classList.add('on');
+}
+function saveConn(id){
+  const u=document.getElementById('cu').value.trim()||'agency.user';
+  const m=document.getElementById('cm').value;
+  const o=ls(); o[id]={user:maskUser(u),userMasked:true,mfa:m,agency:document.getElementById('cw').value.trim(),last:(o[id]||{}).last||'—',at:today()};
+  sv(o); close_('connectModal'); renderCarriers(); renderClients(); logAdd(`${CARRIERS.find(c=>c.id===id).n} connected · ${m}`);
+}
+function maskUser(u){return u.length<4?u.slice(0,1)+'•••':u.slice(0,2)+'••••'+u.slice(-1)}
+function disconnect(id){const o=ls();delete o[id];sv(o);renderCarriers();renderClients();logAdd(`${CARRIERS.find(c=>c.id===id).n} disconnected`)}
+function close_(m){document.getElementById(m).classList.remove('on')}
+
+function openPull(pn){
+  const c=contracts().find(x=>x.policy_number===pn); const car=CARRIERS.find(x=>x.n===c.carrier)||{fields:{}};
+  const f=car.fields||{};
+  const raw={}; Object.entries(f).forEach(([k,v])=>{ if(k==='premium') raw[v]='$'+(Number(c.premium)*(0.96+Math.random()*0.1)).toFixed(2); else if(k==='effective') raw[v]='01/01/2026'; else if(k==='expiration') raw[v]=c.expiration; else if(k==='policy_number') raw[v]=c.policy_number; else if(k==='insured_name') raw[v]=c.insured_name; });
+  const norm={policy_number:c.policy_number,insured_name:c.insured_name,effective:'2026-01-01',expiration:c.expiration,premium:Number(c.premium)};
+  window.__pull={pn,prev:c,car,c};
+  document.getElementById('pullSheet').innerHTML=`
+    <h3>${c.carrier} · pull policy</h3>
+    <div class="sub">${c.insured_name} · ${c.policy_number}</div>
+    <div class="diff">
+      <div class="pane"><div class="t">Carrier returned</div>${Object.entries(raw).map(([k,v])=>`<div class="kv"><span>${k}</span><span>${v}</span></div>`).join('')}</div>
+      <div class="pane"><div class="t">Our structure</div>${Object.entries(norm).map(([k,v])=>`<div class="kv"><span>${k}</span><span>${v}</span></div>`).join('')}</div>
+    </div>
+    <div style="display:flex;gap:9px;justify-content:flex-end;margin-top:14px">
+      <button class="btn ghost" onclick="close_('pullModal')">Close</button>
+      <button class="btn gold" onclick="applyPull()">Apply to policy</button>
+    </div>`;
+  document.getElementById('pullModal').classList.add('on');
+}
+function applyPull(){
+  const {pn,car}=window.__pull;
+  let data; try{data=JSON.parse(localStorage.getItem(LKEY)||'[]')}catch(e){data=[]}
+  if(!data.length) data=JSON.parse(JSON.stringify(DEMO));
+  const i=data.findIndex(x=>x.policy_number===pn);
+  if(i>-1){ data[i].last_pull=today(); data[i].source=car.t; data[i].premium=Math.round(data[i].premium); }
+  localStorage.setItem(LKEY,JSON.stringify(data));
+  const o=ls(); const cid=car.id; if(o[cid]) o[cid].last=today(); sv(o);
+  close_('pullModal'); renderClients(); logAdd(`${car.n} · ${pn} refreshed`);
+}
+function syncAll(){
+  const conn=ls(); const n=Object.keys(conn).length;
+  if(!n){logAdd('No markets connected yet');return}
+  let data; try{data=JSON.parse(localStorage.getItem(LKEY)||'[]')}catch(e){data=[]}
+  if(!data.length) data=JSON.parse(JSON.stringify(DEMO));
+  let k=0;
+  data.forEach(r=>{const car=CARRIERS.find(x=>x.n===r.carrier); if(car&&conn[car.id]){r.last_pull=today(); k++;}});
+  localStorage.setItem(LKEY,JSON.stringify(data));
+  renderClients(); logAdd(`Synced ${k} policies across ${n} connected markets`);
+}
+const LKEY_LOG='card_pulllog';
+function logAdd(t){
+  let l=[]; try{l=JSON.parse(localStorage.getItem(LKEY_LOG)||'[]')}catch(e){}
+  l.unshift({t,at:new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})});
+  localStorage.setItem(LKEY_LOG,JSON.stringify(l.slice(0,8))); renderLog();
+}
+function renderLog(){
+  let l=[]; try{l=JSON.parse(localStorage.getItem(LKEY_LOG)||'[]')}catch(e){}
+  document.getElementById('log').innerHTML=l.length?l.map(x=>`<div>${x.t}<div style="color:#8A99AD;font-size:11.5px">${x.at}</div></div>`).join(''):'<div style="color:#8A99AD">No pulls yet this session.</div>';
+}
+renderCarriers();renderMap();renderClients();renderLog();
+</script>
+</body></html>
